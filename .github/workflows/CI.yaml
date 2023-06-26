@@ -79,4 +79,28 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: run unit tests
-        run: npm run test
+        run: npm run test:coverage
+      - name: upload tests coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-lcov-${{ github.sha }}
+          path: coverage/
+
+  sonarcloud:
+    name: sonarcloud
+    needs: [lint, unit-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: download tests coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-lcov-${{ github.sha }}
+          path: coverage/
+      - name: sonarcloud scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
