@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    image: fada
+    build:
+      dockerfile: Dockerfile.dev
+    container_name: fada-container
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules/
+    ports:
+        - '8000:8000'
+
+volumes:
+  node_modules:

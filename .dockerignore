@@ -1,0 +1,11 @@
+.git
+.github
+.gitignore
+
+Dockerfile
+.dockerignore
+docker-compose.yaml
+
+node_modules
+dist
+package-lock.json

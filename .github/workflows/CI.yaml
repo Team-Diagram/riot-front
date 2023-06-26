@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  pull_request:
+    type: [opened, synchronize, reopened]
+
+jobs:
+  check-branch-name:
+    name: check the branch name
+    runs-on: ubuntu-latest
+    steps:
+      - uses: deepakputhraya/action-branch-name@master
+        with:
+          regex: '^(feature|bugfix|improvement|library|prerelease|release|hotfix)\/[a-z0-9_.-]+$'
+          allowed_prefixes: 'feature,bugfix,improvement,library,prerelease,release,hotfix'
+          ignore: main,dev
+          min_length: 5
+          max_length: 50
+
+  install-dependencies:
+    name: setup development environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.0
+      - name: setup npm
+        run: npm install -g npm@9.5.1
+      - name: restore node_modules cache
+        uses: actions/cache/restore@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: install dependencies
+        run: npm ci
+      - name: save node_modules cache
+        uses: actions/cache/save@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.0
+      - name: setup npm
+        run: npm install -g npm@9.5.1
+      - name: restore node_modules cache
+        uses: actions/cache/restore@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: run linter
+        run: npm run lint
+    
+  unit-tests:
+    name: unit tests
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.0
+      - name: setup npm
+        run: npm install -g npm@9.5.1
+      - name: restore node_modules cache
+        uses: actions/cache/restore@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: run unit tests
+        run: npm run test
