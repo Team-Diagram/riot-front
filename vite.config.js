@@ -14,7 +14,7 @@ export default defineConfig({
   base: './',
   server: {
     host: true,
-    port: 8000,
+    port: 8080,
   },
   test: {
     globals: true,
