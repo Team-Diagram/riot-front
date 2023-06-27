@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: client-riot
+    build:
+      dockerfile: Dockerfile.prod
+    container_name: client-riot-container
+    ports:
+      - '127.0.0.1:80:80'
+      - '127.0.0.1:443:443'
