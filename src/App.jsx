@@ -2,7 +2,7 @@
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './index.scss'
 import {
-  Equipements, Home, Plannings, Routines, Statistiques,
+  Equipements, Home, Plannings, Routines, Statistiques, Login,
 } from 'src/views'
 import { SideBar } from 'src/components'
 
@@ -42,6 +42,10 @@ function App() {
           element: <Statistiques />,
         },
       ],
+    },
+    {
+      path: '/login',
+      element: <Login />,
     },
   ])
   return <RouterProvider router={router} />

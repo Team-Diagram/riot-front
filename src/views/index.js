@@ -4,6 +4,7 @@ import Plannings from './Plannings/Plannings'
 import Routines from './Routines/Routines'
 import Statistiques from './Statistiques/Statistiques'
 import Equipements from './Equipements/Equipements'
+import Login from './Login/Login'
 
 export {
   MyView,
@@ -12,4 +13,5 @@ export {
   Routines,
   Statistiques,
   Equipements,
+  Login,
 }
