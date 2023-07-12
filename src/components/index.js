@@ -1,3 +1,7 @@
+import SideBar from './SideBar/SideBar'
 import MyComponent from './MyComponent/MyComponent'
 
-export default MyComponent
+export {
+  MyComponent,
+  SideBar,
+}

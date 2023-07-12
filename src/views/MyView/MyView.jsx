@@ -1,6 +1,6 @@
-import MyComponent from 'src/components'
+import { MyComponent } from 'src/components'
 
-function MyPage() {
+function MyView() {
   return (
     <div className="MyView">
       <MyComponent />
@@ -8,4 +8,4 @@ function MyPage() {
   )
 }
 
-export default MyPage
+export default MyView
