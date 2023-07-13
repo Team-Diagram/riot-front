@@ -15,13 +15,15 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'no-empty-function': 'error',
-    'max-len': ['error', { code: 100 }],
+    'max-len': ['error', { code: 300 }], // 100
     'arrow-parens': ['error', 'always'],
     'react/react-in-jsx-scope': 'off',
-    'import/no-extraneous-dependencies': [
-      'error',
-      { devDependencies: ['vite.config.js'] },
-    ],
+    // 'import/no-extraneous-dependencies': [
+    //   'error',
+    //   { devDependencies: ['vite.config.js'] },
+    // ],
+    'import/no-extraneous-dependencies': 'off',
+    'global-require': 0,
   },
   settings: {
     'import/resolver': {

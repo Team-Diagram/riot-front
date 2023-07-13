@@ -1,0 +1,18 @@
+mode: auto
+branchName: '${issue.title,}/${issue.number}'
+gitSafeReplacementChar: '-'
+defaultBranch: 'dev'
+branches:
+  - label: 'feature'
+    prefix: 'feature/'
+  - label: 'bug'
+    prefix: 'bugfix/'
+  - label: 'improvement'
+    prefix: 'improvement/'
+  - label: 'library'
+    prefix: 'library/'
+
+openDraftPR: true
+copyIssueAssigneeToPR: true
+prSkipCI: true
+conventionalPrTitles: true
