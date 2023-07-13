@@ -4,7 +4,7 @@ import './index.scss'
 import {
   Equipements, Home, Plannings, Routines, Statistiques, Login,
 } from 'src/views'
-import { SideBar } from 'src/components'
+import { SideBar, DataTable } from 'src/components'
 
 function Layout() {
   return (
@@ -40,6 +40,10 @@ function App() {
         {
           path: '/statistiques',
           element: <Statistiques />,
+        },
+        {
+          path: '/test',
+          element: <DataTable />,
         },
       ],
     },
