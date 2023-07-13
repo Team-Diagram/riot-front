@@ -1,3 +1,9 @@
+import SideBar from './SideBar/SideBar'
 import MyComponent from './MyComponent/MyComponent'
+import DataTable from './DataTable/DataTable'
 
-export default MyComponent
+export {
+  MyComponent,
+  SideBar,
+  DataTable,
+}
