@@ -1,10 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './index.scss'
 import {
-  Equipements, Home, Plannings, Routines, Statistiques, Login,
+  Equipments, Home, Schedules, Statistics, Login, Users,
 } from 'src/views'
-import { SideBar } from 'src/components'
+import SideBar from 'src/components'
 
 function Layout() {
   return (
@@ -29,19 +28,19 @@ function App() {
         },
         {
           path: '/equipements',
-          element: <Equipements />,
-        },
-        {
-          path: '/routines',
-          element: <Routines />,
+          element: <Equipments />,
         },
         {
           path: '/plannings',
-          element: <Plannings />,
+          element: <Schedules />,
         },
         {
           path: '/statistiques',
-          element: <Statistiques />,
+          element: <Statistics />,
+        },
+        {
+          path: '/users',
+          element: <Users />,
         },
       ],
     },

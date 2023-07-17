@@ -1,17 +1,15 @@
-import MyView from './MyView/MyView'
 import Home from './Home/Home'
-import Plannings from './Plannings/Plannings'
-import Routines from './Routines/Routines'
-import Statistiques from './Statistiques/Statistiques'
-import Equipements from './Equipements/Equipements'
+import Schedules from './Schedules/Schedules'
+import Statistics from './Statistics/Statistics'
+import Equipments from './Equipments/Equipments'
 import Login from './Login/Login'
+import Users from './Users/Users'
 
 export {
-  MyView,
   Home,
-  Plannings,
-  Routines,
-  Statistiques,
-  Equipements,
+  Schedules,
+  Statistics,
+  Equipments,
   Login,
+  Users,
 }
