@@ -30,7 +30,7 @@ function DataTable() {
   }
 
   const handleChange = (e) => {
-    const { name, value } = e.target 
+    const { name, value } = e.target
     setNouvelUtilisateur((prevState) => ({
       ...prevState,
       [name]: value,
