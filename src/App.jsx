@@ -7,9 +7,11 @@ import { SideBar } from 'src/components'
 
 function Layout() {
   return (
-    <div className="app">
+    <div className="app container-page">
       <SideBar />
-      <Outlet />
+      <section className="container-page-content">
+        <Outlet />
+      </section>
     </div>
   )
 }
