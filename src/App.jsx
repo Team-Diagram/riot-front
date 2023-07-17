@@ -5,6 +5,7 @@ import {
   Equipements, Home, Plannings, Routines, Statistiques, Login,
 } from 'src/views'
 import { SideBar } from 'src/components'
+import DataTable from './components/DataTable/DataTable'
 
 function Layout() {
   return (
@@ -42,6 +43,10 @@ function App() {
         {
           path: '/statistiques',
           element: <Statistiques />,
+        },
+        {
+          path: '/test',
+          element: <DataTable />,
         },
       ],
     },
