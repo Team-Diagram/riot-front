@@ -1,50 +1,135 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Card, Icon, Divider } from '@tremor/react'
+import { LogoutIcon } from '@heroicons/react/outline'
+import {
+  // Navbar outline
+  HomeIconOutline,
+  ViewGridAddIconOutline,
+  CalendarIconOutline,
+  ChartPieIconOutline,
+  UsersIconOutline,
+
+  // Navbar solid
+  HomeIconSolid,
+  ViewGridAddIconSolid,
+  CalendarIconSolid,
+  ChartPieIconSolid,
+  UsersIconSolid,
+  UserIconOutline,
+} from '../../assets'
 
 function SideBar() {
+  const [selectedItem, setSelectedItem] = useState(null)
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item)
+    sessionStorage.setItem('navbar', item)
+  }
+
+  const handleUserModal = () => {
+    alert('open modal')
+  }
+
+  const handleLogout = () => {
+    alert('logout')
+    localStorage.remove('token')
+  }
+
+  useEffect(() => {
+    const sessionStorageItem = sessionStorage.getItem('navbar')
+    setSelectedItem(sessionStorageItem || 'accueil')
+  }, [])
+
+  const menuItems = [
+    {
+      id: 'accueil',
+      iconSolid: HomeIconSolid,
+      iconOutline: HomeIconOutline,
+      text: 'Accueil',
+      link: '/',
+    },
+    {
+      id: 'equipements',
+      iconSolid: ViewGridAddIconSolid,
+      iconOutline: ViewGridAddIconOutline,
+      text: 'Équipements',
+      link: '/equipements',
+    },
+    {
+      id: 'plannings',
+      iconSolid: CalendarIconSolid,
+      iconOutline: CalendarIconOutline,
+      text: 'Plannings',
+      link: '/plannings',
+    },
+    {
+      id: 'statistiques',
+      iconSolid: ChartPieIconSolid,
+      iconOutline: ChartPieIconOutline,
+      text: 'Statistiques',
+      link: '/statistiques',
+    },
+    {
+      id: 'users',
+      iconSolid: UsersIconSolid,
+      iconOutline: UsersIconOutline,
+      text: 'Utilisateurs',
+      link: '/users',
+    },
+  ]
+
   return (
     <div className="sidebar">
-      <div className="top">
-        <span>RIOT</span>
-      </div>
-      <hr />
-      <div className="center">
-        <ul>
+      <Card className="h-full flex flex-col justify-between">
+        <div className="sidebar-top">
+          <div className="sidebar-top__logo">
+            <span>RIOT</span>
+          </div>
 
-          <li>
-            <Link to="/">
-              <span>Home</span>
-            </Link>
-          </li>
+          <div className="sidebar-top__pages">
+            <ul>
+              {menuItems.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    className={selectedItem === item.id ? 'selected' : ''}
+                    to={item.link}
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    <Icon
+                      color="default"
+                      icon={selectedItem === item.id ? item.iconSolid : item.iconOutline}
+                    />
+                    <p>{item.text}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
 
-          <li>
-            <Link to="/equipements">
-              <span>Équipements</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/routines">
-              <span>Routines</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/plannings">
-              <span>Plannings</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/statiques">
-              <span>Statistiques</span>
-            </Link>
-          </li>
-          <li>
-            <span> Users si Admin</span>
-          </li>
-          <li>
-            <span>Utilisateur</span>
-          </li>
-        </ul>
-      </div>
+        <div className="sidebar__bottom">
+          <Divider />
+          <div className="user-container">
+            <div onClick={() => handleUserModal()}>
+              <div className="user-container__top">
+                <Icon icon={UserIconOutline} color="default" />
+                <p>user.name</p>
+              </div>
+              <div className="user-container__bottom">
+                <p>user.mail</p>
+              </div>
+            </div>
+
+            <div className="user-container__logout" onClick={() => handleLogout()}>
+              <Icon
+                icon={LogoutIcon}
+                color="default"
+              />
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
   )
 }
