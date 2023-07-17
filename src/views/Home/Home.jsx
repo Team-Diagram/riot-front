@@ -1,15 +1,15 @@
-import {Card, Metric, Text} from "@tremor/react";
+// import { Card, Metric, Text } from '@tremor/react'
 
 function Home() {
   return (
     <div className="home">
-      <div className="homeContainer">
+      {/* <div className="homeContainer">
         homeee
-          <Card className="max-w-xs mx-auto" decoration="top" decorationColor="indigo">
-              <Text>Sales</Text>
-              <Metric>$ 34,743</Metric>
-          </Card>
-      </div>
+        <Card className="max-w-xs mx-auto" decoration="top" decorationColor="indigo">
+          <Text>Sales</Text>
+          <Metric>$ 34,743</Metric>
+        </Card>
+      </div> */}
     </div>
   )
 }
