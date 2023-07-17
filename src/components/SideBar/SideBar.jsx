@@ -100,7 +100,7 @@ function SideBar() {
                       color="default"
                       icon={selectedItem === item.id ? item.iconSolid : item.iconOutline}
                     />
-                    <p>{item.text}</p>
+                    <p className="size-18">{item.text}</p>
                   </Link>
                 </li>
               ))}
@@ -111,22 +111,22 @@ function SideBar() {
         <div className="sidebar__bottom">
           <Divider />
           <div className="user-container">
-            <div onClick={() => handleUserModal()}>
+            <button type="button" onClick={handleUserModal}>
               <div className="user-container__top">
                 <Icon icon={UserIconOutline} color="default" />
-                <p>user.name</p>
+                <p className="size-18">user.name</p>
               </div>
               <div className="user-container__bottom">
-                <p>user.mail</p>
+                <p className="size-14">user.mail</p>
               </div>
-            </div>
+            </button>
 
-            <div className="user-container__logout" onClick={() => handleLogout()}>
+            <button type="button" className="user-container__logout" onClick={handleLogout}>
               <Icon
                 icon={LogoutIcon}
                 color="default"
               />
-            </div>
+            </button>
           </div>
         </div>
       </Card>

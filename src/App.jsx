@@ -3,7 +3,7 @@ import './index.scss'
 import {
   Equipments, Home, Schedules, Statistics, Login, Users,
 } from 'src/views'
-import { SideBar } from 'src/components'
+import SideBar from 'src/components'
 
 function Layout() {
   return (

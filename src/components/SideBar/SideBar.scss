@@ -4,9 +4,7 @@
   justify-content: space-between;
   width: 20%;
   height: calc(100vh - 40px);
-  font-family: Avenir-Medium;
-  font-size: 1.125rem;
-  color: $black;
+  font-family: "Avenir-Medium";
   
   &-top{
     &__logo {
@@ -39,8 +37,10 @@
     .selected {
       background-color: $purple-lighter;
       border-radius: 4px;
-      color: $primary;
       transition: all 0.2s ease;      
+    }
+    .selected p, .selected span {
+      color: $primary
     }
   }
 
@@ -62,8 +62,8 @@
 
         p {
           color: $grey;
-          font-family: Avenir-Roman;
-          font-size: 0.875rem;
+          font-family: "Avenir-Roman";
+          width: fit-content;
         }
       }
       
