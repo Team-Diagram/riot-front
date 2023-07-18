@@ -1,7 +1,11 @@
-import SideBar from './SideBar/SideBar'
 import Add from './Add/Add'
+import SelectInput from './SelectInputs/SelectInput'
+import SideBar from './SideBar/SideBar'
+import TableGlobal from './TableGlobal/TableGlobal'
 
 export {
-  SideBar,
   Add,
+  SelectInput,
+  SideBar,
+  TableGlobal,
 }

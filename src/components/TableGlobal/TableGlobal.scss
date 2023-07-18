@@ -1,0 +1,14 @@
+.table-cell-equipements{
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  &-icons{
+    display: flex;
+    gap: 8px;
+    & > span,
+    & > img{
+      padding: 0;
+      width: 20px;
+    }
+  }
+}
