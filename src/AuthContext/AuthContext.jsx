@@ -1,6 +1,4 @@
-import React, { createContext, useState, useMemo } from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types'
+import { createContext, useState, useMemo } from 'react'
 
 export const AuthContext = createContext()
 
@@ -48,8 +46,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   )
-}
-
-AuthProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 }

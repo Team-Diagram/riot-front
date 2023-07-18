@@ -3,21 +3,18 @@ import { useEffect, useState } from 'react'
 import { Card, Icon, Divider } from '@tremor/react'
 import { LogoutIcon } from '@heroicons/react/outline'
 import {
-  // Navbar outline
   HomeIconOutline,
   ViewGridAddIconOutline,
   CalendarIconOutline,
   ChartPieIconOutline,
   UsersIconOutline,
-
-  // Navbar solid
   HomeIconSolid,
   ViewGridAddIconSolid,
   CalendarIconSolid,
   ChartPieIconSolid,
   UsersIconSolid,
   UserIconOutline,
-} from '../../assets'
+} from 'src/assets'
 
 function SideBar() {
   const [selectedItem, setSelectedItem] = useState(null)
