@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
 import { Card, Icon, Divider } from '@tremor/react'
 import { LogoutIcon } from '@heroicons/react/outline'
 import {
@@ -15,9 +15,94 @@ import {
   UsersIconSolid,
   UserIconOutline,
 } from 'src/assets'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import jwtDecode from 'jwt-decode'
+import { AuthContext } from '../../AuthContext/AuthContext'
 
 function SideBar() {
   const [selectedItem, setSelectedItem] = useState(null)
+  const [username, setUsername] = useState('') // Define username state
+  const [lastName, setLastName] = useState('') // Define lastName state
+  const { logout } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const sessionStorageItem = sessionStorage.getItem('navbar')
+    setSelectedItem(sessionStorageItem || 'accueil')
+
+    // Get the token from local storage
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      // Decode the token to access its payload (user information)
+      const decodedToken = jwtDecode(token)
+
+      // Assuming the username is stored in the 'username' field of the token's payload
+      setUsername(decodedToken.username) // Update the username state
+
+      setLastName(decodedToken.lastName)
+
+      // Now you can use the username in your UI
+
+      // Save the decodedToken to use it later for role filtering
+      handleRoleFiltering(decodedToken)
+    }
+  }, [])
+
+  const handleRoleFiltering = (decodedToken) => {
+    // Define the menu items with IDs and roles required to access them
+    const menuItems = [
+      {
+        id: 'accueil',
+        iconSolid: HomeIconSolid,
+        iconOutline: HomeIconOutline,
+        text: 'Accueil',
+        link: '/',
+      },
+      {
+        id: 'equipements',
+        iconSolid: ViewGridAddIconSolid,
+        iconOutline: ViewGridAddIconOutline,
+        text: 'Équipements',
+        link: '/equipements',
+      },
+      {
+        id: 'plannings',
+        iconSolid: CalendarIconSolid,
+        iconOutline: CalendarIconOutline,
+        text: 'Plannings',
+        link: '/plannings',
+      },
+      {
+        id: 'statistiques',
+        iconSolid: ChartPieIconSolid,
+        iconOutline: ChartPieIconOutline,
+        text: 'Statistiques',
+        link: '/statistiques',
+      },
+      {
+        id: 'users',
+        iconSolid: UsersIconSolid,
+        iconOutline: UsersIconOutline,
+        text: 'Utilisateurs',
+        link: '/users',
+        role: 'ROLE_ADMIN', // Role required to access this menu item
+      },
+    ]
+
+    // Filter out the "Utilisateurs" menu item if the user is not an admin
+    const filteredMenuItems = menuItems.filter((item) => {
+      if (item.id === 'users') {
+        // Check if the "users" menu item has the role "ROLE_ADMIN"
+        return decodedToken.roles.includes(item.role)
+      }
+      return true // Keep other menu items
+    })
+
+    setFilteredMenuItems(filteredMenuItems)
+  }
+
+  const [filteredMenuItems, setFilteredMenuItems] = useState([])
 
   const handleItemClick = (item) => {
     setSelectedItem(item)
@@ -28,53 +113,15 @@ function SideBar() {
     alert('open modal')
   }
 
-  const handleLogout = () => {
-    alert('logout')
-    localStorage.remove('token')
+  const handleLogout = async () => {
+    try {
+      logout()
+
+      navigate('/login')
+    } catch (error) {
+      // ... (previous error handling code)
+    }
   }
-
-  useEffect(() => {
-    const sessionStorageItem = sessionStorage.getItem('navbar')
-    setSelectedItem(sessionStorageItem || 'accueil')
-  }, [])
-
-  const menuItems = [
-    {
-      id: 'accueil',
-      iconSolid: HomeIconSolid,
-      iconOutline: HomeIconOutline,
-      text: 'Accueil',
-      link: '/',
-    },
-    {
-      id: 'equipements',
-      iconSolid: ViewGridAddIconSolid,
-      iconOutline: ViewGridAddIconOutline,
-      text: 'Équipements',
-      link: '/equipements',
-    },
-    {
-      id: 'plannings',
-      iconSolid: CalendarIconSolid,
-      iconOutline: CalendarIconOutline,
-      text: 'Plannings',
-      link: '/plannings',
-    },
-    {
-      id: 'statistiques',
-      iconSolid: ChartPieIconSolid,
-      iconOutline: ChartPieIconOutline,
-      text: 'Statistiques',
-      link: '/statistiques',
-    },
-    {
-      id: 'users',
-      iconSolid: UsersIconSolid,
-      iconOutline: UsersIconOutline,
-      text: 'Utilisateurs',
-      link: '/users',
-    },
-  ]
 
   return (
     <div className="sidebar">
@@ -86,7 +133,7 @@ function SideBar() {
 
           <div className="sidebar-top__pages">
             <ul>
-              {menuItems.map((item) => (
+              {filteredMenuItems.map((item) => (
                 <li key={item.id}>
                   <Link
                     className={selectedItem === item.id ? 'selected' : ''}
@@ -111,18 +158,15 @@ function SideBar() {
             <button type="button" onClick={handleUserModal}>
               <div className="user-container__top">
                 <Icon icon={UserIconOutline} color="default" />
-                <p className="size-18">user.name</p>
+                <p className="size-18">{lastName}</p>
               </div>
               <div className="user-container__bottom">
-                <p className="size-14">user.mail</p>
+                <p className="size-14">{username}</p>
               </div>
             </button>
 
             <button type="button" className="user-container__logout" onClick={handleLogout}>
-              <Icon
-                icon={LogoutIcon}
-                color="default"
-              />
+              <Icon icon={LogoutIcon} color="default" />
             </button>
           </div>
         </div>
