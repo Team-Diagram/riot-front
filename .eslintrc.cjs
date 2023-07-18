@@ -26,6 +26,8 @@ module.exports = {
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/no-unescaped-entities': 'off',
+    'react/no-array-index-key': 'off',
+    'jsx-a11y/alt-text': 'off',
   },
   settings: {
     'import/resolver': {
