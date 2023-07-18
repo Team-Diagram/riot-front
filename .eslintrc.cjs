@@ -14,16 +14,18 @@ module.exports = {
   ],
   rules: {
     semi: ['error', 'never'],
+    'no-alert': 'off',
     'no-empty-function': 'error',
-    'max-len': ['error', { code: 300 }], // 100
+    'max-len': ['error', { code: 100 }],
     'arrow-parens': ['error', 'always'],
+    'import/no-extraneous-dependencies': [
+      'error',
+      { devDependencies: ['vite.config.js', 'tailwind.config.js'] },
+    ],
+    'global-require': 'off',
+    'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    // 'import/no-extraneous-dependencies': [
-    //   'error',
-    //   { devDependencies: ['vite.config.js'] },
-    // ],
-    'import/no-extraneous-dependencies': 'off',
-    'global-require': 0,
+    'react/no-unescaped-entities': 'off',
   },
   settings: {
     'import/resolver': {

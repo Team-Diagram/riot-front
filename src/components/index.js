@@ -1,3 +1,7 @@
 import SideBar from './SideBar/SideBar'
+import Add from './Add/Add'
 
-export default SideBar
+export {
+  SideBar,
+  Add,
+}
