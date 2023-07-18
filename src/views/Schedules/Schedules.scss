@@ -1,0 +1,122 @@
+.schedules-top-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__buttons {
+    display: flex;
+    gap: 28px;
+
+    button{
+      height: 40px
+    }
+  }  
+}
+
+// remove style from FullCalendar
+:root {
+  --fc-today-bg-color: transparent !important;
+}
+
+.fc {
+  &-event {
+    background-color: $purple-lighter !important;
+    border-color: $purple-light !important;
+    &-time {
+      color: $grey;
+      font-weight: 700 !important;
+      padding: 8px
+    }
+
+    &:hover {
+      border-color: $primary !important;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+  }
+
+  &-header-toolbar {
+    margin-bottom: 40px !important ;
+  }
+
+  &-col-header-cell-cushion {
+    padding: 12px 8px !important
+  }
+
+  &-scrollgrid{
+    border-color: transparent !important
+  }
+
+  &-button-group{
+    gap: 24px
+  }
+
+  &-prev-button, &-next-button{
+    background-color: transparent !important;
+    color: $black !important;
+    border: solid 1px transparent !important;
+    border-radius: 100px !important;
+    margin: 0px !important;
+    padding: 4px !important;
+    height: 40px;
+    width: 40px;
+
+    &:hover{
+      background-color: $purple-lighter !important;
+    }
+
+    &:active{
+      color: $primary !important;
+    }
+
+    &:focus{
+      box-shadow:none !important;
+    }
+  }
+
+  &-timegrid {
+    &-now-indicator {
+      &-arrow {
+        border-width: 6px 0px 6px 7px !important;
+      }
+      &-line {
+        border-width: 2px 0px 0px !important;
+      }
+    }
+
+    &-slot {
+      height: 52px !important;
+
+      &-label-cushion {
+        padding: 0 12px !important
+      }
+    }
+  }
+
+  
+
+  &-timeGridDay-button, &-timeGridWeek-button{
+    color: $black !important;
+    background-color: $white !important;
+    border: solid 1px $purple-light!important;
+    border-radius: 4px !important;
+    
+    &:hover{
+      background-color: $purple-lighter !important;
+    }
+
+    &:active{
+      color: $primary !important;
+    }
+
+    &:focus{
+      box-shadow:none !important;
+    }
+  }
+  
+  &-button-active {
+    background-color: $white !important;
+    color: $primary !important;
+  }
+}
+

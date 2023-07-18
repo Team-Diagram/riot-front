@@ -16,12 +16,13 @@ module.exports = {
     semi: ['error', 'never'],
     'no-alert': 'off',
     'no-empty-function': 'error',
-    'max-len': ['error', { code: 100 }],
+    'max-len': ['error', { code: 300 }],
     'arrow-parens': ['error', 'always'],
-    'import/no-extraneous-dependencies': [
-      'error',
-      { devDependencies: ['vite.config.js', 'tailwind.config.js'] },
-    ],
+    // 'import/no-extraneous-dependencies': [
+    //   'error',
+    //   { devDependencies: ['vite.config.js', 'tailwind.config.js'] },
+    // ],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'global-require': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
