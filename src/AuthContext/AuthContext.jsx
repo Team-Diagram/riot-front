@@ -8,11 +8,16 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:1501/login', {
+      const response = await fetch('http://localhost:8787/api/login_check', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        credentials: 'include',
-        body: `email=${email}&password=${password}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       })
       const { token: authToken } = await response.json()
       if (authToken) {

@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../AuthContext/AuthContext'
 
 function Login() {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
-  const { logout, login, isAuthenticated } = useContext(AuthContext)
+  const { login, isAuthenticated, logout } = useContext(AuthContext)
   const navigate = useNavigate()
 
   async function handleSubmit(event) {
     event.preventDefault()
     try {
-      await login(username, password)
+      await login(email, password)
       navigate('/')
     } catch (err) {
       setError(err.message)
@@ -42,8 +42,8 @@ function Login() {
                     className="form-control form-control-lg"
                     placeholder="adresse mail"
                     name="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div className="fields-row">
