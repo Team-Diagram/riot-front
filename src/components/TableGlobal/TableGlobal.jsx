@@ -17,8 +17,8 @@ function TableGlobal({ data, headers, renderCells }) {
       <TableBody>
         {data.map((item, index) => (
           <TableRow key={index}>
-            {headers.map((header, index) => (
-              <TableCell key={index}>
+            {headers.map((header, indexHeader) => (
+              <TableCell key={indexHeader}>
                 {
                   renderCells[header]
                     ? renderCells[header](item)
