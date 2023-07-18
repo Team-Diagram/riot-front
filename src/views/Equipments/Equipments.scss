@@ -1,0 +1,32 @@
+.title-select-equipements > .w-full {
+  width: 260px;
+}
+
+.equipement-content{
+  &-map{
+    flex: 1;
+    &-image{
+      position: relative;
+      width: 100%;
+      img{
+        width: 100%;
+        object-fit: contain;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+        &#mapAll{
+          position: relative;
+          opacity: 1;
+        }
+        &.active{
+          opacity: 1;
+        }
+      }
+    }
+  }
+  &-salles{
+    height: fit-content;
+  }
+}
