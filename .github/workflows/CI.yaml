@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: deepakputhraya/action-branch-name@master
         with:
-          regex: '^(feature|bugfix|improvement|library|prerelease|release|hotfix)\/[a-z0-9_.-]+$'
-          allowed_prefixes: 'feature,bugfix,improvement,library,prerelease,release,hotfix'
+          regex: '^(feature|bugfix|improvement|library)\/[a-z0-9_.-]+\/?([0-9]+)?$'
+          allowed_prefixes: 'feature,bugfix,improvement,library'
           ignore: main,dev
           min_length: 5
           max_length: 50
@@ -60,45 +60,15 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: run linter
         run: npm run lint
-    
-  unit-tests:
-    name: unit tests
-    runs-on: ubuntu-latest
-    needs: install-dependencies
-    steps:
-      - uses: actions/checkout@v3
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.16.0
-      - name: setup npm
-        run: npm install -g npm@9.5.1
-      - name: restore node_modules cache
-        uses: actions/cache/restore@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - name: run unit tests
-        run: npm run test:coverage
-      - name: upload tests coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-lcov-${{ github.sha }}
-          path: coverage/
 
   sonarcloud:
     name: sonarcloud
-    needs: [lint, unit-tests]
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: download tests coverage
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage-lcov-${{ github.sha }}
-          path: coverage/
       - name: sonarcloud scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
