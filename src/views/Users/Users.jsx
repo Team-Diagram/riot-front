@@ -24,14 +24,12 @@ function Users() {
     fetch('http://localhost:8787/api/user/all', { headers })
       .then((response) => response.json())
       .then((data) => {
-        // Check if the data is an array and not empty
         if (Array.isArray(data) && data.length > 0) {
           setUtilisateurs(data)
         } else {
           setUtilisateurs([])
         }
       })
-      .catch((error) => console.log(error))
       .finally(() => setLoading(false))
   }, [])
 
@@ -50,15 +48,12 @@ function Users() {
       },
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then(() => {
         // After successful deletion, update the state to remove the deleted user
         const nouveauxUtilisateurs = utilisateurs.filter(
           (utilisateur) => utilisateur.id !== id,
         )
         setUtilisateurs(nouveauxUtilisateurs)
-      })
-      .catch((error) => {
-        console.error('Error deleting user:', error)
       })
   }
 
@@ -76,7 +71,6 @@ function Users() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // After successful addition, update the state to include the new user
         const newUser = {
           ...data,
           roles: [nouvelUtilisateur.admin ? 'admin' : 'user'],
@@ -92,11 +86,7 @@ function Users() {
           admin: false,
         })
         setAfficherModal(false)
-        // Reload the page to fetch the updated user list
         window.location.reload()
-      })
-      .catch((error) => {
-        console.error('Error adding user:', error)
       })
   }
 
