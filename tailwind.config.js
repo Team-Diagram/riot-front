@@ -20,7 +20,7 @@ module.exports = {
             muted: '#bfdbfe', // blue-200
             subtle: '#60a5fa', // blue-400
             DEFAULT: '#844AFF', // blue-500
-            emphasis: '#1d4ed8', // blue-700
+            emphasis: '#7338f4', // blue-700
             inverted: '#ffffff', // white
           },
           background: {
@@ -30,7 +30,7 @@ module.exports = {
             emphasis: '#374151', // gray-700
           },
           border: {
-            DEFAULT: '#e5e7eb', // gray-200
+            DEFAULT: '#E3D6FF', // gray-200
           },
           ring: {
             DEFAULT: '#e5e7eb', // gray-200
@@ -45,9 +45,9 @@ module.exports = {
         },
       },
       boxShadow: {
-        'tremor-input': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        'tremor-input': '0 1px 2px 0 rgb(248, 245, 255)',
         'tremor-card': '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-        'tremor-dropdown': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+        'tremor-dropdown': '0 4px 6px -1px rgb(248, 245, 255), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
       },
       borderRadius: {
         'tremor-small': '0.375rem',
