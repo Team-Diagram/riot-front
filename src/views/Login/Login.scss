@@ -1,0 +1,30 @@
+.container-page{
+    height: 100vh;
+    .login-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+
+        .login-title{
+            position: absolute;
+            left: 40px;
+            top: 40px;
+        }
+        .login-content{
+            width: 450px;
+        }
+        label{
+            display: flex;
+            flex-direction: column;
+            input{
+                border-radius: 6px;
+                border: 1px solid var(--gray-300, #D0D4DA);
+                background: var(--base-white, #FFF);
+                padding: 8px 12px;
+                box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+
+}
