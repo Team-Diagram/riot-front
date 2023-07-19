@@ -1,10 +1,18 @@
-import { createContext, useState, useMemo } from 'react'
+// AuthProvider.js
+import {
+  createContext, useState, useEffect, useMemo,
+} from 'react'
 
 export const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    // Check if the user is authenticated on initial load
+    const token = localStorage.getItem('token')
+    setIsAuthenticated(!!token)
+  }, [])
 
   const login = async (email, password) => {
     try {
@@ -19,11 +27,11 @@ export function AuthProvider({ children }) {
           password,
         }),
       })
+
       const { token: authToken } = await response.json()
       if (authToken) {
-        setToken(authToken)
-        localStorage.setItem('token', authToken)
         setIsAuthenticated(true)
+        localStorage.setItem('token', authToken) // Store the token in localStorage
       }
     } catch (err) {
       throw new Error(err.message)
@@ -32,8 +40,7 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setIsAuthenticated(false)
-    setToken(null)
-    localStorage.removeItem('token')
+    localStorage.removeItem('token') // Remove the token from localStorage
   }
 
   const authContextValue = useMemo(
@@ -41,14 +48,9 @@ export function AuthProvider({ children }) {
       isAuthenticated,
       login,
       logout,
-      token,
     }),
-    [isAuthenticated, login, logout, token],
+    [isAuthenticated],
   )
 
-  return (
-    <AuthContext.Provider value={authContextValue}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>
 }
