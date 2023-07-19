@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 import { Card, Icon, Divider } from '@tremor/react'
 import { LogoutIcon } from '@heroicons/react/outline'
+import { ModalUser } from 'src/components'
 import {
   HomeIconOutline,
   ViewGridAddIconOutline,
@@ -21,36 +22,37 @@ import { AuthContext } from '../../AuthContext/AuthContext'
 
 function SideBar() {
   const [selectedItem, setSelectedItem] = useState(null)
-  const [username, setUsername] = useState('') // Define username state
-  const [lastName, setLastName] = useState('') // Define lastName state
+  const [firstName, setFirstName] = useState('') 
+  const [lastName, setLastName] = useState('')
+  const [email,setEmail]=useState('')
+
   const { logout } = useContext(AuthContext)
+  const [isModal, setIsModal] = useState (false)
   const navigate = useNavigate()
 
   useEffect(() => {
     const sessionStorageItem = sessionStorage.getItem('navbar')
     setSelectedItem(sessionStorageItem || 'accueil')
-
-    // Get the token from local storage
+    
     const token = localStorage.getItem('token')
 
     if (token) {
-      // Decode the token to access its payload (user information)
+
       const decodedToken = jwtDecode(token)
 
-      // Assuming the username is stored in the 'username' field of the token's payload
-      setUsername(decodedToken.username) // Update the username state
-
+      setFirstName(decodedToken.firstName)
       setLastName(decodedToken.lastName)
-
-      // Now you can use the username in your UI
-
-      // Save the decodedToken to use it later for role filtering
+      setEmail(decodedToken.username)
       handleRoleFiltering(decodedToken)
     }
   }, [])
 
+  const showModal = () =>{
+    setIsModal(false)
+  }
+
   const handleRoleFiltering = (decodedToken) => {
-    // Define the menu items with IDs and roles required to access them
+    
     const menuItems = [
       {
         id: 'accueil',
@@ -86,17 +88,17 @@ function SideBar() {
         iconOutline: UsersIconOutline,
         text: 'Utilisateurs',
         link: '/users',
-        role: 'ROLE_ADMIN', // Role required to access this menu item
+        role: 'ROLE_ADMIN', 
       },
     ]
 
-    // Filter out the "Utilisateurs" menu item if the user is not an admin
+    
     const filteredMenuItems = menuItems.filter((item) => {
       if (item.id === 'users') {
-        // Check if the "users" menu item has the role "ROLE_ADMIN"
+    
         return decodedToken.roles.includes(item.role)
       }
-      return true // Keep other menu items
+      return true
     })
 
     setFilteredMenuItems(filteredMenuItems)
@@ -110,21 +112,53 @@ function SideBar() {
   }
 
   const handleUserModal = () => {
-    alert('open modal')
+    setIsModal(true);
   }
 
   const handleLogout = async () => {
     try {
       logout()
-
       navigate('/login')
     } catch (error) {
-      // ... (previous error handling code)
     }
+  }
+  const handlEditUser = (utilisateur)=>{
+    const token = localStorage.getItem('token');
+    const uuid = jwtDecode(token)['uuid'];
+    const requestBody = {};
+
+    for (const [key, value] of Object.entries(utilisateur)) {
+      if (key !== 'admin' && value !== '') {
+        requestBody[key] = value;
+      }
+    }
+    fetch(`http://localhost:8787/api/user/update/${uuid}`,{
+      method:'PUT',
+      body:JSON.stringify(requestBody),
+      headers:{
+        'Content-Type':'application/json',
+        Authorization:`Bearer ${token}`
+      }
+    }).then((response) => response.json())
+    .then((data) => {
+      if(data.token){
+          localStorage.setItem('token', data.token);
+      }
+    }).then(()=>{
+            window.location.reload()
+    })
+    .catch((error) => {
+      console.error(error)
+    })
   }
 
   return (
+
+    
     <div className="sidebar">
+      {isModal && (
+        <ModalUser title="Profil" showModal={showModal} buttonText="Sauvegarder les modifications" action="edit-user" handleEditUser={handlEditUser}/>
+      )}
       <Card className="h-full flex flex-col justify-between">
         <div className="sidebar-top">
           <div className="sidebar-top__logo">
@@ -158,10 +192,10 @@ function SideBar() {
             <button type="button" onClick={handleUserModal}>
               <div className="user-container__top">
                 <Icon icon={UserIconOutline} color="default" />
-                <p className="size-18">{lastName}</p>
+                <p className="size-16">{lastName} {firstName}</p>
               </div>
               <div className="user-container__bottom">
-                <p className="size-14">{username}</p>
+                <p className="size-14">{email}</p>
               </div>
             </button>
 
