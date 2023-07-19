@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../AuthContext/AuthContext'
 import { Button } from '@tremor/react'
+import { AuthContext } from '../../AuthContext/AuthContext'
+
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

@@ -13,13 +13,15 @@ function SelectInput({ placeholder, data, onChange, uuid }) {
   };
 
   return (
-    <Select value={value} onValueChange={handleValueChange} placeholder={placeholder}>
-      {data.map((item, index) => (
-        <SelectItem key={index} value={item} selected={value === item}>
-          {item}
-        </SelectItem>
-      ))}
-    </Select>
+    <div className="select-input-container">
+      <Select value={value} onValueChange={handleValueChange} placeholder={placeholder}>
+        {data.map((item, index) => (
+          <SelectItem key={index} value={item} selected={value === item}>
+            {item}
+          </SelectItem>
+        ))}
+      </Select>
+    </div>
   );
 }
 
