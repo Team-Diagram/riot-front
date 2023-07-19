@@ -15,6 +15,7 @@ import {
   UsersIconSolid,
   UserIconOutline,
 } from 'src/assets'
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwtDecode from 'jwt-decode'
 import { AuthContext } from '../../AuthContext/AuthContext'
