@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../AuthContext/AuthContext'
-
+import { Button } from '@tremor/react'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -31,39 +31,38 @@ function Login() {
   }
 
   return (
-    <div className="login">
+    <div className="container-page">
       <div className="login-container">
-        <div className="box-shadow-1 box-model">
-          <h1 className="text-center">Login</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="fields-column">
-              <div className="fields-row">
-                <input
-                  type="text"
-                  className="form-control form-control-lg"
-                  placeholder="adresse mail"
-                  name="username"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="fields-row">
-                <input
+        <h1 className="text-left login-title">RioT</h1>
+        <form className='container-box login-content'>
+          <h2>Se connecter</h2>
+          <label>
+            Adresse mail
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="exemple@gmail.com"
+              name="username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <label>
+            Mot de passe
+            <input
                   type="password"
                   className="form-control form-control-lg"
-                  placeholder="mot de passe"
+                  placeholder="Password"
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-              </div>
-            </div>
-            <div className="bloc-btn">
-              {error && <p className="error">{error}</p>}
-              <button type="submit">je me connecte</button>
-            </div>
-          </form>
-        </div>
+          </label>
+          <Button variant="primary" onClick={handleSubmit}>
+              Se connecter
+          </Button>
+          {error && <p className="error">{error}</p>}
+        </form>
       </div>
     </div>
 
