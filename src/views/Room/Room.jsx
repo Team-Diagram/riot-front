@@ -32,9 +32,10 @@ function Room() {
     return () => clearInterval(intervalId)
   }, [])
 
+
   const { id } = useParams()
   const roomData = equipmentsData.find((item) => item.place_name === id)
-
+  
   if (!roomData) {
     return <p>Salle en cours de chargement</p>
   }
@@ -49,13 +50,17 @@ function Room() {
     // setShowAdminControl(true)
   }
 
-  console.log(isAdmin)
-
   const handleLightState = () => {
+    const updatedEquipmentsData = [...equipmentsData];
+    const targetPlaceId = roomData.place_id;
+    const targetIndex = updatedEquipmentsData.findIndex(item => item.place_id === targetPlaceId);
+    updatedEquipmentsData[targetIndex].light_state = !updatedEquipmentsData[targetIndex].light_state;
+    setEquipmentsData(updatedEquipmentsData)
+    
     fetch(`${import.meta.env.VITE_API_BASE_URL}/switch/light`, {
       method: 'POST',
       body: JSON.stringify({
-        place_id: roomData.place_id,
+        place_id: targetPlaceId,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -73,18 +78,26 @@ function Room() {
   const tempeatureRound = Math.round(roomData.measure_values[1].temperature)
   const luminositeRound = Math.round(roomData.measure_values[2].lux)
 
-  const handleChangeState = (target, action) => {
-    const updatedEquipmentsData = [...equipmentsData]
-    const targetPlaceId = roomData.place_id
-    const targetIndex = updatedEquipmentsData.findIndex((item) => item.place_id === targetPlaceId)
-    if (target === 'ac') {
-      target = 'climatisation'
+  const handleChangeState = (target,action)=>{
+    const updatedEquipmentsData = [...equipmentsData];
+    const targetPlaceId = roomData.place_id;
+    const targetIndex = updatedEquipmentsData.findIndex(item => item.place_id === targetPlaceId);
+    let value = updatedEquipmentsData[targetIndex][`${target}_state`]
+
+    if(action === 'increase'){
+      value +=1
+    }else{
+      value -=1
     }
-    const value = action === 'increase' ? 1 : -1
+
     if (targetIndex !== -1) {
-      updatedEquipmentsData[targetIndex][`${target}_state`] += value
-      setEquipmentsData(updatedEquipmentsData)
-      // fetchEquipmentsState(token,target,targetPlaceId,roomData[`${target}_state`])
+      updatedEquipmentsData[targetIndex][`${target}_state`] = value;
+      setEquipmentsData(updatedEquipmentsData);
+      if(target === 'ac'){
+        fetchEquipmentsState(token,'climatisation',targetPlaceId,updatedEquipmentsData[targetIndex][`${target}_state`])
+      }else{
+        fetchEquipmentsState(token,target,targetPlaceId,updatedEquipmentsData[targetIndex][`${target}_state`])
+      }
     }
   }
 
@@ -130,7 +143,7 @@ function Room() {
           {
             isAdmin ? (
               <Toggle
-                selectedTab={roomData.light_state ? '0' : '1'}
+                selectedTab={roomData.light_state ? 0 : 1}
                 onTabChange={handleLightState}
               />
             ) : null
@@ -249,7 +262,7 @@ function Room() {
                 <button
                   id="btnDecreaseAc"
                   className="room-controller-toggle-control-button"
-                  onClick={decreaseVent}
+                  onClick={() => handleChangeState('vent', 'decrease')}
                   disabled={roomData.vent_state === 0}
                 >
                   <p>-</p>
@@ -258,14 +271,14 @@ function Room() {
             }
             <p>
               <span className="room-controller-number">{roomData.vent_state}</span>
-              /6
+              /12
             </p>
             {
               isAdmin ? (
                 <button
                   id="btnIncreaseAc"
                   className="room-controller-toggle-control-button"
-                  onClick={increaseVent}
+                  onClick={() => handleChangeState('vent', 'increase')}
                   disabled={roomData.vent_state === 12}
                 >
                   <p>+</p>
