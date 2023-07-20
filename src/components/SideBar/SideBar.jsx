@@ -22,22 +22,21 @@ import { AuthContext } from '../../AuthContext/AuthContext'
 
 function SideBar() {
   const [selectedItem, setSelectedItem] = useState(null)
-  const [firstName, setFirstName] = useState('') 
+  const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [email,setEmail]=useState('')
+  const [email, setEmail] = useState('')
 
   const { logout } = useContext(AuthContext)
-  const [isModal, setIsModal] = useState (false)
+  const [isModal, setIsModal] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
     const sessionStorageItem = sessionStorage.getItem('navbar')
     setSelectedItem(sessionStorageItem || 'accueil')
-    
+
     const token = localStorage.getItem('token')
 
     if (token) {
-
       const decodedToken = jwtDecode(token)
 
       setFirstName(decodedToken.firstName)
@@ -47,12 +46,11 @@ function SideBar() {
     }
   }, [])
 
-  const showModal = () =>{
+  const showModal = () => {
     setIsModal(false)
   }
 
   const handleRoleFiltering = (decodedToken) => {
-    
     const menuItems = [
       {
         id: 'accueil',
@@ -88,14 +86,12 @@ function SideBar() {
         iconOutline: UsersIconOutline,
         text: 'Utilisateurs',
         link: '/users',
-        role: 'ROLE_ADMIN', 
+        role: 'ROLE_ADMIN',
       },
     ]
 
-    
     const filteredMenuItems = menuItems.filter((item) => {
       if (item.id === 'users') {
-    
         return decodedToken.roles.includes(item.role)
       }
       return true
@@ -112,7 +108,7 @@ function SideBar() {
   }
 
   const handleUserModal = () => {
-    setIsModal(true);
+    setIsModal(true)
   }
 
   const handleLogout = async () => {
@@ -122,42 +118,41 @@ function SideBar() {
     } catch (error) {
     }
   }
-  const handlEditUser = (utilisateur)=>{
-    const token = localStorage.getItem('token');
-    const uuid = jwtDecode(token)['uuid'];
-    const requestBody = {};
+  const handlEditUser = (utilisateur) => {
+    const token = localStorage.getItem('token')
+    const { uuid } = jwtDecode(token)
+    const requestBody = {}
 
     for (const [key, value] of Object.entries(utilisateur)) {
       if (key !== 'admin' && value !== '') {
-        requestBody[key] = value;
+        requestBody[key] = value
       }
     }
-    fetch(`http://localhost:8787/api/user/update/${uuid}`,{
-      method:'PUT',
-      body:JSON.stringify(requestBody),
-      headers:{
-        'Content-Type':'application/json',
-        Authorization:`Bearer ${token}`
-      }
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/update/${uuid}`, {
+      method: 'PUT',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     }).then((response) => response.json())
-    .then((data) => {
-      if(data.token){
-          localStorage.setItem('token', data.token);
-      }
-    }).then(()=>{
-            window.location.reload()
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem('token', data.token)
+        }
+      }).then(() => {
+        window.location.reload()
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   return (
 
-    
     <div className="sidebar">
       {isModal && (
-        <ModalUser title="Profil" showModal={showModal} buttonText="Sauvegarder les modifications" action="edit-user" handleEditUser={handlEditUser}/>
+        <ModalUser title="Profil" showModal={showModal} buttonText="Sauvegarder les modifications" action="edit-user" handleEditUser={handlEditUser} />
       )}
       <Card className="h-full flex flex-col justify-between">
         <div className="sidebar-top">
@@ -192,7 +187,11 @@ function SideBar() {
             <button type="button" onClick={handleUserModal}>
               <div className="user-container__top">
                 <Icon icon={UserIconOutline} color="default" />
-                <p className="size-16">{lastName} {firstName}</p>
+                <p className="size-16">
+                  {lastName}
+                  {' '}
+                  {firstName}
+                </p>
               </div>
               <div className="user-container__bottom">
                 <p className="size-14">{email}</p>

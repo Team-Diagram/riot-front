@@ -1,8 +1,8 @@
 import { Button, Select, SelectItem } from '@tremor/react'
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import React, { useEffect, useState } from 'react'
-import { SelectInput } from 'src/components'
-import { ModalUser } from 'src/components'
+import { SelectInput, ModalUser } from 'src/components'
+
 function Users() {
   const [utilisateurs, setUtilisateurs] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -17,7 +17,7 @@ function Users() {
     if (token) {
       headers.Authorization = `Bearer ${token}`
     }
-    fetch('http://localhost:8787/api/user/all', { headers })
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/all`, { headers })
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
@@ -35,7 +35,7 @@ function Users() {
 
   const handleDeleteUser = (id) => {
     const token = localStorage.getItem('token')
-    const apiUrl = `http://localhost:8787/api/user/delete/${id}`
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/user/delete/${id}`
 
     fetch(apiUrl, {
       method: 'DELETE',
@@ -52,12 +52,12 @@ function Users() {
         setUtilisateurs(nouveauxUtilisateurs)
       })
   }
-  const showModal = () =>{
+  const showModal = () => {
     setIsModal(false)
   }
   const handleAddUser = (utilisateur) => {
     const token = localStorage.getItem('token')
-    const apiUrl = 'http://localhost:8787/api/user'
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/user`
     fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -65,11 +65,11 @@ function Users() {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        first_name:utilisateur.first_name,
-        last_name:utilisateur.last_name,
-        email:utilisateur.email,
-        password:utilisateur.password,
-        admin: utilisateur.admin === "on" ? true:false
+        first_name: utilisateur.first_name,
+        last_name: utilisateur.last_name,
+        email: utilisateur.email,
+        password: utilisateur.password,
+        admin: utilisateur.admin === 'on',
       }),
     })
       .then((response) => response.json())
@@ -88,7 +88,7 @@ function Users() {
       role = ['ROLE_ADMIN']
     }
 
-    fetch(`http://localhost:8787/api/user/update/${uuid}`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/update/${uuid}`, {
       method: 'PUT',
       body: JSON.stringify({
         roles: role,
@@ -118,82 +118,82 @@ function Users() {
       </div>
 
       {isModal && (
-        // <div className="modal">
-        //   <div className="modal-content container-box">
-        //     <div className="modal-content__header">
-        //       <h2>Ajouter un nouvel utilisateur</h2>
-        //       <span
-        //         onKeyDown={(e) => {
-        //           if (e.keyCode === 13) setAfficherModal(false)
-        //         }}
-        //         role="button"
-        //         tabIndex={0}
-        //         className="close"
-        //         onClick={() => setAfficherModal(false)}
-        //       >
-        //         &times;
-        //       </span>
-        //     </div>
-        //     <label htmlFor="firstNameInput">
-        //       Prénom:
-        //       <input
-        //         type="text"
-        //         name="first_name"
-        //         placeholder="Anthony"
-        //         value={nouvelUtilisateur.first_name}
-        //         onChange={handleChange}
-        //       />
-        //     </label>
+      // <div className="modal">
+      //   <div className="modal-content container-box">
+      //     <div className="modal-content__header">
+      //       <h2>Ajouter un nouvel utilisateur</h2>
+      //       <span
+      //         onKeyDown={(e) => {
+      //           if (e.keyCode === 13) setAfficherModal(false)
+      //         }}
+      //         role="button"
+      //         tabIndex={0}
+      //         className="close"
+      //         onClick={() => setAfficherModal(false)}
+      //       >
+      //         &times;
+      //       </span>
+      //     </div>
+      //     <label htmlFor="firstNameInput">
+      //       Prénom:
+      //       <input
+      //         type="text"
+      //         name="first_name"
+      //         placeholder="Anthony"
+      //         value={nouvelUtilisateur.first_name}
+      //         onChange={handleChange}
+      //       />
+      //     </label>
 
-        //     <label htmlFor="lastNameInput">
-        //       Nom:
-        //       <input
-        //         type="text"
-        //         placeholder="Ringressi"
-        //         name="last_name"
-        //         value={nouvelUtilisateur.last_name}
-        //         onChange={handleChange}
-        //       />
-        //     </label>
+      //     <label htmlFor="lastNameInput">
+      //       Nom:
+      //       <input
+      //         type="text"
+      //         placeholder="Ringressi"
+      //         name="last_name"
+      //         value={nouvelUtilisateur.last_name}
+      //         onChange={handleChange}
+      //       />
+      //     </label>
 
-        //     <label htmlFor="emailInput">
-        //       Adresse e-mail:
-        //       <input
-        //         type="email"
-        //         name="email"
-        //         placeholder="exemple@gmail.com"
-        //         value={nouvelUtilisateur.email}
-        //         onChange={handleChange}
-        //       />
-        //     </label>
+      //     <label htmlFor="emailInput">
+      //       Adresse e-mail:
+      //       <input
+      //         type="email"
+      //         name="email"
+      //         placeholder="exemple@gmail.com"
+      //         value={nouvelUtilisateur.email}
+      //         onChange={handleChange}
+      //       />
+      //     </label>
 
-        //     <label htmlFor="passwordInput">
-        //       Mot de passe:
-        //       <input
-        //         type="password"
-        //         name="password"
-        //         placeholder="••••••••••"
-        //         value={nouvelUtilisateur.password}
-        //         onChange={handleChange}
-        //       />
-        //     </label>
+      //     <label htmlFor="passwordInput">
+      //       Mot de passe:
+      //       <input
+      //         type="password"
+      //         name="password"
+      //         placeholder="••••••••••"
+      //         value={nouvelUtilisateur.password}
+      //         onChange={handleChange}
+      //       />
+      //     </label>
 
-        //     <label htmlFor="adminInput" className="adminCheckbox">
-        //       Cocher pour rendre admin:
-        //       <input
-        //         type="checkbox"
-        //         name="admin"
-        //         checked={nouvelUtilisateur.admin}
-        //         onChange={handleChange}
-        //       />
-        //     </label>
+      //     <label htmlFor="adminInput" className="adminCheckbox">
+      //       Cocher pour rendre admin:
+      //       <input
+      //         type="checkbox"
+      //         name="admin"
+      //         checked={nouvelUtilisateur.admin}
+      //         onChange={handleChange}
+      //       />
+      //     </label>
 
         //     <Button variant="primary" onClick={handleAddUser}>
         //       Ajouter un utilisateur
         //     </Button>
         //   </div>
         // </div>
-        <ModalUser title="Ajouter un nouvel utilisateur" showModal={showModal} buttonText="Ajouter un utilisateur" action="add-user" handleAddUser={handleAddUser}/>
+        <ModalUser title="Ajouter un nouvel utilisateur" showModal={showModal} buttonText="Ajouter un utilisateur" action="add-user" handleAddUser={handleAddUser} />
       )}
       <div className="table-container">
         <table className="table-user">
