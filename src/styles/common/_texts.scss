@@ -1,0 +1,47 @@
+h1, h2, h3, h4, h5, h6{
+  line-height: 1.3em;
+}
+p, input, select, label, a, li,{
+  line-height: 1.5em;
+  font-size: 16px;
+  color: $grey
+}
+
+.tremor-TableRow-row th{
+  line-height: 1.5em;
+  font-size: 16px;
+  color: $black;
+}
+.tremor-TableRow-row td{
+  line-height: 1.5em;
+  font-size: 16px;
+  color: $grey;
+}
+
+body h1 {
+  font-family: "Avenir-Black", sans-serif;
+  font-size: 42px;
+}
+body h2 {
+  font-family: "Avenir-Heavy", sans-serif;
+  font-size: 24px;
+}
+
+.paragraph_bold{
+  font-family: "Inter-Bold", sans-serif;
+}
+
+$fontSizes: ("24" : 24, "18" : 18, "16" : 16, "14" : 14);
+@each $sizeName, $size in $fontSizes {
+  h1, h2, h3, h4, h5, h6, p, span, input, select, label, a, li {
+    &.size-#{$sizeName} {
+      font-size: #{$size}px;
+    }
+  }
+}
+
+@mixin paragraph($color, $size, $font) {
+  color: $color;
+  font-size: $size;
+  font-family: $font, sans-serif;
+}

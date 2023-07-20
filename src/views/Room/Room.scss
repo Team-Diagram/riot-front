@@ -1,0 +1,73 @@
+.room-controller{
+  align-items: center;
+  &-number{
+    color: $primary;
+  }
+  &-toggle{
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    &-text{
+      display: flex;
+      align-items: center;
+    }
+    &-control{
+      display: flex;
+      gap: 8px;
+      & > p{
+        min-width: 33px;
+        text-align: center;
+      }
+      &-button{
+        border-radius: 4px;
+        border: 0.5px solid $primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        background-color: $white;
+        transition: 0.2s all ease-in-out;
+        &:disabled{
+          opacity: 0.4;
+          &:hover{
+            background-color: $white;
+          }
+        }
+        &:hover{
+          background-color: $purple_lighter;
+        }
+        p{
+          @include paragraph(null, 14px, Inter-Regular)
+        }
+      }
+    }
+    .tremor-TabGroup-root {
+      width: fit-content;
+    }
+  }
+  &-bar{
+    gap: 8px;
+    &-text{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0;
+      &-icon{
+        display: flex;
+        align-items: center;
+        .icon-ac{
+          width: 34px;
+        }
+      }
+    }
+  }
+}
+
+.room-map{
+  img{
+    max-width: 650px;
+    margin: auto;
+  }
+}

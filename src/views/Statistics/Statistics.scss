@@ -1,0 +1,43 @@
+.statistics {
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+      width: 180px
+    }
+  }
+
+  &__middle {
+    display: flex;
+    gap: 28px;
+    
+    .container-box {
+      flex: 1;
+      div {
+        display: flex;
+        flex-direction: column;
+        gap:8px
+      }
+    }
+  }
+
+  &__bottom {
+    height: 100%;
+  }
+
+  &__value {
+    color: $black;
+    font-size: 80px;
+    line-height: normal;
+    font-weight: 600;
+    span {
+      font-size: 36px;
+    }
+  }
+}
+
+.recharts-legend-wrapper {
+  display: none;
+}

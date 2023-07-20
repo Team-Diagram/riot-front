@@ -1,0 +1,23 @@
+.table-cell-equipements{
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  &-icons{
+    display: flex;
+    gap: 8px;
+    & > span,
+    & > img{
+      padding: 0;
+      width: 20px;
+    }
+  }
+}
+
+.table-row-equipments{
+  background-color: $white;
+  transition: background-color 0.3s ease-in-out;
+  &:hover{
+    background-color: $purple_lighterer;
+    cursor: pointer;
+  }
+}

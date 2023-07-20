@@ -1,0 +1,10 @@
+.alert-item{
+  .tremor-Callout-header{
+    .tremor-Callout-title{
+      @include paragraph($red, 14px, 'Inter-Bold')
+    }
+  }
+  .tremor-Callout-body{
+    @include paragraph($red, 14px, 'Inter-Regular')
+  }
+}
