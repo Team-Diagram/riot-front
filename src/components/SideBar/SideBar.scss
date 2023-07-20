@@ -6,12 +6,16 @@
   height: 100vh;
   font-family: "Avenir-Medium", sans-serif;
   padding: 28px 0 28px 28px;
+
+  & > .container-box {
+    gap: 0;
+  }
   
   &-top{
+
     &__logo {
       display: flex;
       align-items: center;
-      justify-content: center;
     }
 
     a {
@@ -19,11 +23,17 @@
       align-items: center;
       gap: 8px;
       padding: 8px 8px 8px 4px;
+      background: white;
+      transition: 0.2s all ease-in-out;
+
+      p{
+        color: $black;
+        font-family: "Avenir-Medium", sans-serif;
+      }
 
       &:hover {
         background-color: $purple-lighter;
         border-radius: 4px;
-        transition: all 0.2s ease;
       }
     }
 
@@ -32,7 +42,7 @@
       flex-direction: column;
       gap: 12px;
       border: solid 1px transparent;
-      margin-top: 60px;
+      margin-top: 28px;
     }
 
     .selected {
@@ -50,12 +60,19 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background-color: white;
+      transition: all 0.2s ease-in-out;
 
       &__top {
         display: flex;
         align-items: center;
         gap: 4px;
-        padding: 8px 8px 0px 4px;
+        padding: 8px 8px 0 4px;
+
+        p{
+          color: $black;
+          font-family: "Avenir-Medium", sans-serif;
+        }
       }
 
       &__bottom {
@@ -80,10 +97,8 @@
       &:hover {
         background-color: $purple-lighter;
         border-radius: 4px;
-        transition: all 0.2s ease;
         cursor: pointer;
       }
-
     }
   }
 }
