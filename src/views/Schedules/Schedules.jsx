@@ -2,22 +2,19 @@ import { useEffect, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import {
-  Select,
-  SelectItem,
   Button,
 } from '@tremor/react'
 import { PlusCircleIcon } from '@heroicons/react/solid'
-import rooms from '../../utils'
+import { rooms } from '../../utils'
+import { SelectInput } from '../../components'
 
 function Schedules() {
-  const [selectedRoomId, setSelectedRoomId] = useState(1)
-  const [selectedRoomLabel, setSelectedRoomLabel] = useState(rooms[0].label)
-  const [roomHours, setRoomHours] = useState(rooms[0].hours)
+  const [value, setValue] = useState(rooms[0].label)
+  const [roomData, setRoomData] = useState(rooms[0].hours)
 
   useEffect(() => {
-    setSelectedRoomLabel(rooms[selectedRoomId - 1].label)
-    setRoomHours(rooms[selectedRoomId - 1].hours)
-  }, [selectedRoomId])
+    setRoomData(rooms.filter((room) => room.label === value)[0])
+  }, [value])
 
   return (
     <>
@@ -25,16 +22,10 @@ function Schedules() {
         <h1>
           Planning salle
           {' '}
-          {selectedRoomLabel}
+          {roomData.label}
         </h1>
         <div className="schedules-top-container__buttons">
-          <Select value={selectedRoomId}>
-            {rooms.map((room, i) => (
-              <SelectItem value={i + 1} onClick={() => setSelectedRoomId(i + 1)}>
-                {room.label}
-              </SelectItem>
-            ))}
-          </Select>
+          <SelectInput data={rooms.map((room) => room.label)} onChange={setValue} firstValue={rooms[0].label} />
           <Button variant="primary" iconPosition="right" icon={PlusCircleIcon}>
             Ajouter des créneaux
           </Button>
@@ -63,7 +54,7 @@ function Schedules() {
           slotDuration="01:00:00"
           height="653px"
           allDaySlot={false}
-          events={roomHours}
+          events={roomData.hours}
         />
       </div>
     </>

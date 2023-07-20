@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@tremor/react'
@@ -35,7 +37,7 @@ function Login() {
     <div className="container-page">
       <div className="login-container">
         <h1 className="text-left login-title">RioT</h1>
-        <form className='container-box login-content'>
+        <form className="container-box login-content">
           <h2>Se connecter</h2>
           <label>
             Adresse mail
@@ -51,16 +53,16 @@ function Login() {
           <label>
             Mot de passe
             <input
-                  type="password"
-                  className="form-control form-control-lg"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+              type="password"
+              className="form-control form-control-lg"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </label>
           <Button variant="primary" onClick={handleSubmit}>
-              Se connecter
+            Se connecter
           </Button>
           {error && <p className="error">{error}</p>}
         </form>

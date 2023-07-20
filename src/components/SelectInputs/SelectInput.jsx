@@ -1,30 +1,29 @@
-import './SelectInput.scss'
-import { Select, SelectItem } from '@tremor/react'
 import { useState } from 'react'
+import { Select, SelectItem } from '@tremor/react'
 
-function SelectInput({ placeholder, data, onChange, uuid }) {
-  const [value, setValue] = useState("");
+function SelectInput({
+  placeholder, data, onChange, firstValue, uuid,
+}) {
+  const [value, setValue] = useState(firstValue || '')
 
   const handleValueChange = (selectedValue) => {
-    setValue(selectedValue);
+    setValue(selectedValue)
     if (onChange) {
-      onChange(selectedValue, uuid);
+      onChange(selectedValue, uuid)
     }
-  };
+  }
 
   return (
     <div className="select-input-container">
       <Select value={value} onValueChange={handleValueChange} placeholder={placeholder}>
-        {data.map((item, index) => (
-          <SelectItem key={index} value={item} selected={value === item}>
+        {data.map((item) => (
+          <SelectItem value={item}>
             {item}
           </SelectItem>
         ))}
       </Select>
     </div>
-  );
+  )
 }
-
-
 
 export default SelectInput
