@@ -7,7 +7,6 @@ import fetchEquipments from '../../controllers/EquipmentController'
 
 function Equipments() {
   const [equipmentsData, setEquipmentsData] = useState([])
-  const [showAdminControl, setShowAdminControl] = useState(false)
 
   useEffect(() => {
     fetchEquipments()

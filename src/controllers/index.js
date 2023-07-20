@@ -4,7 +4,9 @@ import {
 } from './UsersController'
 import fetchEquipments from './EquipmentController'
 import fetchEquipmentsState from './VariatorEquipment'
+import fetchNotifications from './NotificationController'
 
+<<<<<<< HEAD
 export {
   fetchStatistics,
   fetchUsers,
@@ -13,4 +15,8 @@ export {
   changeRole,
   fetchEquipmentsState,
   fetchEquipments,
+=======
+export default {
+  fetchStatistics, fetchEquipments, fetchEquipmentsState, fetchNotifications,
+>>>>>>> 8411fef (feat alert room)
 }

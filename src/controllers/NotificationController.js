@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 
-const fetchEquipments = () => {
-  return fetch(`${import.meta.env.VITE_API_BASE_URL}/states`)
+const fetchNotifications = () => {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/notification`)
     .then((response) => response.json())
     .then((data) => {
       return data
@@ -11,4 +11,4 @@ const fetchEquipments = () => {
     })
 }
 
-export default fetchEquipments
+export default fetchNotifications

@@ -10,11 +10,11 @@ import { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import fetchEquipments from '../../controllers/EquipmentController.js'
 import fetchEquipmentsState from '../../controllers/VariatorEquipment.js'
+import fetchNotifications from "../../controllers/NotificationController.js";
 
 function Room() {
   const [equipmentsData, setEquipmentsData] = useState([])
-  // const [showAdminControl, setShowAdminControl] = useState(false)
-
+  const [notificationData, setNotificationData] = useState([])
   const headers = ['Température', 'Taux CO2', 'Luminosité', 'Consommation', 'Nombre de personnes']
 
   useEffect(() => {
@@ -30,6 +30,12 @@ function Room() {
     fetchData()
     const intervalId = setInterval(fetchData, 31 * 1000)
     return () => clearInterval(intervalId)
+
+    // eslint-disable-next-line no-unreachable
+    fetchNotifications()
+      .then((jsonData) => {
+        setNotificationData(jsonData.message)
+      })
   }, [])
 
 
@@ -101,6 +107,15 @@ function Room() {
     }
   }
 
+  const dateAlert = () => {
+    const dateInput = '2023-07-12 11:28:22'
+    const dateObj = new Date(dateInput)
+    const addZero = (number) => (number < 10 ? `0${number}` : number)
+    const formattedDate = `${addZero(dateObj.getDate())}/${addZero(dateObj.getMonth() + 1)}/${dateObj.getFullYear()}
+     à ${addZero(dateObj.getHours())}h${addZero(dateObj.getMinutes())}`
+    return formattedDate
+  }
+
   return (
     <>
       <div>
@@ -114,16 +129,19 @@ function Room() {
         </h1>
       </div>
       {
-        roomData.alert
-          ? (
-            <div className="container-page-content-row">
-              <Alert
-                Title="Titre de l'alerte"
-                Text="Texte assez long de l'alerte lalala"
-              />
-            </div>
-          )
-          : null
+         roomData.place_name
+           ? (
+             <div className="container-page-content-row">
+               {notificationData.map((notification, index) => (
+                 <Alert
+                   key={index}
+                   Title={notification.data.info}
+                   Text={dateAlert}
+                 />
+               ))}
+             </div>
+           )
+           : null
       }
       <div className="container-page-content-row">
         <div className="container-box room-controller room-controller-toggle">
