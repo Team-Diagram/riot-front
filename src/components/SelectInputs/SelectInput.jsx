@@ -17,7 +17,7 @@ function SelectInput({
     <div className="select-input-container">
       <Select value={value} onValueChange={handleValueChange} placeholder={placeholder}>
         {data.map((item) => (
-          <SelectItem value={item}>
+          <SelectItem key={item} value={item}>
             {item}
           </SelectItem>
         ))}

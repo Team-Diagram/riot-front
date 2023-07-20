@@ -28,7 +28,6 @@ module.exports = {
     'react/prop-types': 'off',
     'jsx-a11y/alt-text': 'off',
     'react/react-in-jsx-scope': 'off',
-    'react/no-array-index-key': 'off',
     'react/no-unescaped-entities': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/no-noninteractive-element-interactions': 'off',

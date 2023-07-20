@@ -21,8 +21,8 @@ function TableGlobal(props) {
     <Table>
       <TableHead>
         <TableRow>
-          {headers.map((header, index) => (
-            <TableHeaderCell key={index}>
+          {headers.map((header) => (
+            <TableHeaderCell key={header}>
               {header}
             </TableHeaderCell>
           ))}
@@ -30,16 +30,16 @@ function TableGlobal(props) {
       </TableHead>
 
       <TableBody>
-        {data.map((item, index) => (
+        {data.map((item) => (
           <TableRow
-            key={index}
+            key={item}
             className="table-row-equipments"
             onClick={() => onClick}
             onMouseEnter={() => onOverRow(item)}
             onMouseLeave={() => onLeaveRow(item)}
           >
-            {headers.map((header, indexHeader) => (
-              <TableCell key={indexHeader}>
+            {headers.map((header) => (
+              <TableCell key={header}>
                 {renderCells[header] ? renderCells[header](item) : item[header]}
               </TableCell>
             ))}

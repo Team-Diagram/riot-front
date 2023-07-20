@@ -118,6 +118,7 @@ function Home() {
             />
             {errors.map((error) => (
               <Alert
+                key={error.data.info}
                 Title={`${error.data.info} salle A104`}
                 Text={error.time}
               />

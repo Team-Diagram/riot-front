@@ -145,9 +145,9 @@ function Room() {
       {
         filteredNotificationData.length > 0 ? (
           <div className="container-page-content-row">
-            {filteredNotificationData.map((notification, index) => (
+            {filteredNotificationData.map((notification) => (
               <Alert
-                key={index}
+                key={notification.data.info}
                 Title={notification.data.info}
                 Text={dateAlert}
               />
@@ -330,8 +330,8 @@ function Room() {
         <Table>
           <TableHead>
             <TableRow>
-              {headers.map((header, index) => (
-                <TableHeaderCell key={index}>
+              {headers.map((header) => (
+                <TableHeaderCell key={header}>
                   {header}
                 </TableHeaderCell>
               ))}
