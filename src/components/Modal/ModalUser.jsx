@@ -1,4 +1,3 @@
-import './Modal.scss'
 import { useState } from 'react'
 import { Button } from '@tremor/react'
 
