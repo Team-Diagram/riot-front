@@ -1,3 +1,7 @@
 import rooms from './constants/rooms.constants'
+import getUserData from './constants/user.constants'
 
-export default rooms
+export {
+  rooms,
+  getUserData,
+}

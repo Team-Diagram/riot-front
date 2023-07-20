@@ -1,0 +1,8 @@
+.modal-content {
+    input {
+        &:focus-visible {
+            outline: none !important;
+            border: solid 1px $primary !important;
+        }
+    }
+}

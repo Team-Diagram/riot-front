@@ -1,13 +1,14 @@
-import { Select, SelectItem, AreaChart } from '@tremor/react'
+import { AreaChart } from '@tremor/react'
 import { useEffect, useState } from 'react'
-import fetchStatistics from '../../controllers'
+import { fetchStatistics } from '../../controllers'
+import { SelectInput } from '../../components'
 
 function Statistics() {
-  const [value, setValue] = useState(1)
+  const [value, setValue] = useState('')
   const [areaChartData, setAreaChartData] = useState([])
   const [watt, setWatt] = useState()
   const [money, setMoney] = useState()
-  const buttonSelectData = ['Semaine', 'Mois', 'Année']
+  const inputData = ['Semaine', 'Mois', 'Année']
 
   // Bon on a un peu menti sur la data mais oklm
   const days = {
@@ -24,8 +25,8 @@ function Statistics() {
 
   const month = {
     ecoWatt: '4 344',
-    ecoMoney: '2 300',
-    label: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+    ecoMoney: '2 303',
+    label: ['Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
   }
 
   useEffect(() => {
@@ -33,18 +34,18 @@ function Statistics() {
       .then((jsonData) => {
         const statisticsData = jsonData.message.map((data) => data.kwh)
         switch (value) {
-          case 1:
-            setAreaChartData(statisticsData.slice(0, 7).map((stat, i) => (
+          case 'Année':
+            setAreaChartData(statisticsData.slice(0, 12).map((stat, i) => (
               {
-                date: days.label[i],
+                date: month.label[i],
                 Kwh: stat,
               }
             )))
-            setWatt(days.ecoWatt)
-            setMoney(days.ecoMoney)
+            setWatt(month.ecoWatt)
+            setMoney(month.ecoMoney)
             break
 
-          case 2:
+          case 'Mois':
             setAreaChartData(statisticsData.slice(0, 4).map((stat, i) => (
               {
                 date: weeks.label[i],
@@ -55,14 +56,14 @@ function Statistics() {
             setMoney(weeks.ecoMoney)
             break
           default:
-            setAreaChartData(statisticsData.slice(0, 12).map((stat, i) => (
+            setAreaChartData(statisticsData.slice(0, 7).map((stat, i) => (
               {
-                date: month.label[i],
+                date: days.label[i],
                 Kwh: stat,
               }
             )))
-            setWatt(month.ecoWatt)
-            setMoney(month.ecoMoney)
+            setWatt(days.ecoWatt)
+            setMoney(days.ecoMoney)
         }
       })
   }, [value])
@@ -73,13 +74,7 @@ function Statistics() {
         <h1>
           Statistiques
         </h1>
-        <Select value={value} onValueChange={setValue}>
-          {buttonSelectData.map((data, i) => (
-            <SelectItem value={i + 1}>
-              {data}
-            </SelectItem>
-          ))}
-        </Select>
+        <SelectInput data={inputData} onChange={setValue} firstValue={inputData[0]} />
       </div>
 
       <div className="statistics__middle">
@@ -105,7 +100,7 @@ function Statistics() {
         </div>
       </div>
 
-      <div className="container-box">
+      <div className="statistics__bottom container-box">
         <h2>Économie d'énergie</h2>
         <AreaChart
           className="h-72 mt-4"
