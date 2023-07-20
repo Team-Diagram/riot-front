@@ -1,9 +1,8 @@
+import './Modal.scss'
 import { useState } from 'react'
 import { Button } from '@tremor/react'
 
-function ModalUser({
-  title, buttonText, action, showModal, handleAddUser, handleEditUser,
-}) {
+function ModalUser({ title, buttonText, action, showModal, handleAddUser, handleEditUser }) {
   const [nouvelUtilisateur, setNouvelUtilisateur] = useState({
     first_name: '',
     last_name: '',

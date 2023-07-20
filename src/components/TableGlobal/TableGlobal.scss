@@ -12,3 +12,12 @@
     }
   }
 }
+
+.table-row-equipments{
+  background-color: $white;
+  transition: background-color 0.3s ease-in-out;
+  &:hover{
+    background-color: $purple_lighterer;
+    cursor: pointer;
+  }
+}

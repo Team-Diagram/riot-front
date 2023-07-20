@@ -4,7 +4,6 @@
 
 .equipement-content{
   &-map{
-    flex: 1;
     &-image{
       position: relative;
       width: 100%;
@@ -28,5 +27,6 @@
   }
   &-salles{
     height: fit-content;
+    flex: none !important;
   }
 }

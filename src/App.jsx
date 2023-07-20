@@ -1,11 +1,17 @@
 // App.js
 import {
-  Routes, Route, BrowserRouter as Router, useNavigate,
+  Routes, Route, BrowserRouter as Router, useNavigate, createBrowserRouter, RouterProvider,
 } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 
 import {
-  Equipments, Home, Schedules, Statistics, Login, Users,
+  Equipments,
+  Home,
+  Schedules,
+  Statistics,
+  Login,
+  Users,
+  Room,
 } from 'src/views'
 import { SideBar } from 'src/components'
 import { AuthContext } from './AuthContext/AuthContext'
@@ -33,6 +39,7 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/equipements" element={<Equipments />} />
+          <Route path="/equipements/salle/:id" element={<Room />} />
           <Route path="/plannings" element={<Schedules />} />
           <Route path="/statistiques" element={<Statistics />} />
           <Route path="/users" element={<Users />} />
@@ -51,6 +58,43 @@ function App() {
       </Routes>
     </Router>
   )
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        {
+          path: '/',
+          element: <Home />,
+        },
+        {
+          path: '/equipements',
+          element: <Equipments />,
+        },
+        {
+          path: '/equipements/salle/:id',
+          element: <Room />,
+        },
+        {
+          path: '/plannings',
+          element: <Schedules />,
+        },
+        {
+          path: '/statistiques',
+          element: <Statistics />,
+        },
+        {
+          path: '/users',
+          element: <Users />,
+        },
+      ],
+    },
+    {
+      path: '/login',
+      element: <Login />,
+    },
+  ])
+  return <RouterProvider router={router} />
 }
 
 export default App

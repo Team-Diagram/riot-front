@@ -28,3 +28,9 @@ $fontSizes: ("24" : 24, "18" : 18, "16" : 16, "14" : 14);
     }
   }
 }
+
+@mixin paragraph($color, $size, $font) {
+  color: $color;
+  font-size: $size;
+  font-family: $font, sans-serif;
+}
