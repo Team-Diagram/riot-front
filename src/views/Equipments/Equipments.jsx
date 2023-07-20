@@ -83,6 +83,7 @@ function Equipments() {
     </div>
 
   )
+
   const renderSalleCell = (item) => <p onClick={() => handleRoomClick(item)}>{item.place_name}</p>
 
   const renderCells = {

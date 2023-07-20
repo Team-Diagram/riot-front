@@ -19,6 +19,7 @@ import {
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { getUserData } from '../../utils'
 import { ModalUser } from '../index'
+import { updateUser } from '../../controllers'
 
 function SideBar() {
   const [selectedItem, setSelectedItem] = useState('accueil')
@@ -26,6 +27,7 @@ function SideBar() {
   const { logout } = useContext(AuthContext)
   const navigate = useNavigate()
   const userData = getUserData()
+  const token = localStorage.getItem('token')
 
   const showModal = () => {
     setIsModal(false)
@@ -79,34 +81,17 @@ function SideBar() {
     }
   }
 
-  const handlEditUser = () => {
-    // const token = localStorage.getItem('token')
-    // const { uuid } = jwtDecode(token)
-    // const requestBody = {}
+  const handlEditUser = (utilisateur) => {
+    const requestBody = {}
 
-    // for (const [key, value] of Object.entries(utilisateur)) {
-    //   if (key !== 'admin' && value !== '') {
-    //     requestBody[key] = value
-    //   }
-    // }
-    // fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/update/${uuid}`, {
-    //   method: 'PUT',
-    //   body: JSON.stringify(requestBody),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // }).then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.token) {
-    //       localStorage.setItem('token', data.token)
-    //     }
-    //   }).then(() => {
-    //     window.location.reload()
-    //   })
-    //   .catch((error) => {
-    //     console.error(error)
-    //   })
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(utilisateur)) {
+      if (key !== 'admin' && value !== '') {
+        requestBody[key] = value
+      }
+    }
+
+    updateUser(requestBody, token)
   }
 
   return (

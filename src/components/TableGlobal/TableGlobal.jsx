@@ -2,7 +2,7 @@ import {
   Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow,
 } from '@tremor/react'
 
-function TableGlobal({ data, headers, renderCells, onClickNavigate, onOverRow, onLeaveRow }) {
+function TableGlobal({ data, headers, renderCells, onClick, onOverRow, onLeaveRow }) {
   return (
     <Table>
       <TableHead>
@@ -19,7 +19,7 @@ function TableGlobal({ data, headers, renderCells, onClickNavigate, onOverRow, o
           <TableRow
             key={index}
             className="table-row-equipments"
-            onClick={() => onClickNavigate(item)}
+            onClick={() => onCLick}
             onMouseEnter={() => onOverRow(item)}
             onMouseLeave={() => onLeaveRow(item)}
           >
