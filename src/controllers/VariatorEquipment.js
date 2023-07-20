@@ -12,14 +12,6 @@ const fetchEquipmentsState = (token, target, placeId,valueVariator) => {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      //window.location.reload()
-    })
-    .catch((error) => {
-      console.error(error)
-    })
 }
 
 export default fetchEquipmentsState

@@ -17,11 +17,20 @@ function Room() {
   const headers = ['Température', 'Taux CO2', 'Luminosité', 'Consommation', 'Nombre de personnes']
 
   useEffect(() => {
-    fetchEquipments()
-      .then((jsonData) => {
-        setEquipmentsData(jsonData.message)
-      })
-  }, [])
+    const fetchData = () => {
+      fetchEquipments()
+        .then((jsonData) => {
+          setEquipmentsData(jsonData.message);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération des équipements :", error);
+        });
+    };
+    fetchData();
+    const intervalId = setInterval(fetchData, 31 * 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+  
 
   const { id } = useParams()
   const roomData = equipmentsData.find((item) => item.place_name === id)
@@ -32,7 +41,6 @@ function Room() {
 
   const token = localStorage.getItem('token')
   const decodedToken = jwtDecode(token)
-  console.log(decodedToken)
 
   let isAdmin = false
 
@@ -53,7 +61,6 @@ function Room() {
     })
       .then((response) => response.json())
       .then(() => {
-        window.location.reload()
       })
       .catch((error) => {
         console.error(error)
@@ -62,18 +69,20 @@ function Room() {
 
   const tempeatureRound = Math.round(roomData.measure_values[1].temperature)
   const luminositeRound = Math.round(roomData.measure_values[2].lux)
-
-  const increaseHeater = () => {
-    fetchEquipmentsState(token, 'heater', roomData.place_id, roomData.heater_state +1 )
-  }
-  const decreaseHeater = () => {
-    console.log('decreaseHeater')
-  }
-  const increaseAc = () => {
-    console.log('increaseAc')
-  }
-  const decreaseAc = () => {
-    console.log('decreaseAc')
+  
+  const handleChangeState = (target,action)=>{
+    const updatedEquipmentsData = [...equipmentsData];
+    const targetPlaceId = roomData.place_id;
+    const targetIndex = updatedEquipmentsData.findIndex(item => item.place_id === targetPlaceId);
+    if(target === 'ac'){
+      target = 'climatisation'
+    }
+    const value = action === 'increase' ? 1 : -1;
+    if (targetIndex !== -1) {
+      updatedEquipmentsData[targetIndex][`${target}_state`] += value;
+      setEquipmentsData(updatedEquipmentsData);
+      // fetchEquipmentsState(token,target,targetPlaceId,roomData[`${target}_state`])
+    }
   }
 
   return (
@@ -138,7 +147,7 @@ function Room() {
             <button
               id="btnDecreaseHeater"
               className="room-controller-toggle-control-button"
-              onClick={decreaseHeater}
+              onClick={() => handleChangeState('heater', 'decrease')}
               disabled={roomData.heater_state === 0}
             >
               <p>-</p>
@@ -150,7 +159,7 @@ function Room() {
             <button
               id="btnIncreaseHeater"
               className="room-controller-toggle-control-button"
-              onClick={increaseHeater}
+              onClick={() => handleChangeState('heater', 'increase')}
               disabled={roomData.heater_state === 6}
             >
               <p>+</p>
@@ -175,7 +184,7 @@ function Room() {
             <button
               id="btnDecreaseAc"
               className="room-controller-toggle-control-button"
-              onClick={decreaseAc}
+              onClick={() => handleChangeState('ac', 'decrease')}
               disabled={roomData.ac_state === 0}
             >
               <p>-</p>
@@ -187,7 +196,7 @@ function Room() {
             <button
               id="btnIncreaseAc"
               className="room-controller-toggle-control-button"
-              onClick={increaseAc}
+              onClick={() => handleChangeState('ac', 'increase')}
               disabled={roomData.ac_state === 6}
             >
               <p>+</p>
@@ -225,7 +234,7 @@ function Room() {
                 {roomData.measure_values[9].kwh}
                 KwH
               </TableCell>
-              <TableCell>{roomData.measure_values[11].persons}</TableCell>
+              {/* <TableCell>{roomData.measure_values[11].persons}</TableCell> */}
             </TableRow>
           </TableBody>
         </Table>
