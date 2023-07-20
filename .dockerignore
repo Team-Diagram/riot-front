@@ -2,10 +2,14 @@
 .github
 .gitignore
 
-Dockerfile
+Dockerfile.dev
+Dockerfile.prod
 .dockerignore
 docker-compose.yaml
 
 node_modules
 dist
 package-lock.json
+.eslintrc.cjs
+
+sonar-project.properties
