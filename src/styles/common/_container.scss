@@ -29,5 +29,9 @@
 
 .container-page-content-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 28px;
+  & > div {
+    flex: 1;
+  }
 }

@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 300px;
   height: 100vh;
-  font-family: "Avenir-Medium";
+  font-family: "Avenir-Medium", sans-serif;
   padding: 28px 0 28px 28px;
   
   &-top{
@@ -30,7 +30,7 @@
     ul {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 12px;
       border: solid 1px transparent;
       margin-top: 60px;
     }
@@ -63,7 +63,7 @@
 
         p {
           color: $grey;
-          font-family: "Avenir-Roman";
+          font-family: "Avenir-Roman", sans-serif;
           width: fit-content;
         }
       }
