@@ -7,6 +7,7 @@ import fetchEquipments from '../../controllers/EquipmentController'
 
 function Equipments() {
   const [equipmentsData, setEquipmentsData] = useState([])
+  const [showAdminControl, setShowAdminControl] = useState(false)
 
   useEffect(() => {
     fetchEquipments()
@@ -56,6 +57,12 @@ function Equipments() {
             ? <img src="./public/images/icons/clim-icon-blue.svg" />
             : <img src="./public/images/icons/clim-icon.svg" />
         }
+
+        {
+          item.vent_state > 0
+            ? <img src="./public/images/icons/ventilation-icon-blue.svg" />
+            : <img src="./public/images/icons/ventilation-icon.svg" />
+        }
       </div>
       {
               item.light_state
@@ -78,13 +85,7 @@ function Equipments() {
 
   return (
     <>
-      <div className="title-select title-select-equipements">
-        <h1>Equipements</h1>
-        <SelectInput
-          placeholder="Sélectionner un type de lieu"
-          data={['Tous les lieux', 'Salles de cours', 'Bureaux', 'Espaces communs']}
-        />
-      </div>
+      <h1>Equipements</h1>
       <div className="container-page-content-row equipement-content">
         <div className="container-box equipement-content-map">
           <div className="equipement-content-map-image">

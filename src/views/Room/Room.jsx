@@ -9,10 +9,11 @@ import { FireIcon, LightBulbIcon } from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import fetchEquipments from '../../controllers/EquipmentController.js'
-import fetchEquipmentsState from "../../controllers/VariatorEquipment.js";
+import fetchEquipmentsState from '../../controllers/VariatorEquipment.js'
 
 function Room() {
   const [equipmentsData, setEquipmentsData] = useState([])
+  // const [showAdminControl, setShowAdminControl] = useState(false)
 
   const headers = ['Température', 'Taux CO2', 'Luminosité', 'Consommation', 'Nombre de personnes']
 
@@ -20,17 +21,16 @@ function Room() {
     const fetchData = () => {
       fetchEquipments()
         .then((jsonData) => {
-          setEquipmentsData(jsonData.message);
+          setEquipmentsData(jsonData.message)
         })
         .catch((error) => {
-          console.error("Erreur lors de la récupération des équipements :", error);
-        });
-    };
-    fetchData();
-    const intervalId = setInterval(fetchData, 31 * 1000);
-    return () => clearInterval(intervalId);
-  }, []);
-  
+          console.error('Erreur lors de la récupération des équipements :', error)
+        })
+    }
+    fetchData()
+    const intervalId = setInterval(fetchData, 31 * 1000)
+    return () => clearInterval(intervalId)
+  }, [])
 
   const { id } = useParams()
   const roomData = equipmentsData.find((item) => item.place_name === id)
@@ -46,7 +46,10 @@ function Room() {
 
   if (decodedToken.roles.includes('ROLE_ADMIN')) {
     isAdmin = true
+    // setShowAdminControl(true)
   }
+
+  console.log(isAdmin)
 
   const handleLightState = () => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/switch/light`, {
@@ -69,18 +72,18 @@ function Room() {
 
   const tempeatureRound = Math.round(roomData.measure_values[1].temperature)
   const luminositeRound = Math.round(roomData.measure_values[2].lux)
-  
-  const handleChangeState = (target,action)=>{
-    const updatedEquipmentsData = [...equipmentsData];
-    const targetPlaceId = roomData.place_id;
-    const targetIndex = updatedEquipmentsData.findIndex(item => item.place_id === targetPlaceId);
-    if(target === 'ac'){
+
+  const handleChangeState = (target, action) => {
+    const updatedEquipmentsData = [...equipmentsData]
+    const targetPlaceId = roomData.place_id
+    const targetIndex = updatedEquipmentsData.findIndex((item) => item.place_id === targetPlaceId)
+    if (target === 'ac') {
       target = 'climatisation'
     }
-    const value = action === 'increase' ? 1 : -1;
+    const value = action === 'increase' ? 1 : -1
     if (targetIndex !== -1) {
-      updatedEquipmentsData[targetIndex][`${target}_state`] += value;
-      setEquipmentsData(updatedEquipmentsData);
+      updatedEquipmentsData[targetIndex][`${target}_state`] += value
+      setEquipmentsData(updatedEquipmentsData)
       // fetchEquipmentsState(token,target,targetPlaceId,roomData[`${target}_state`])
     }
   }
@@ -124,10 +127,14 @@ function Room() {
               Lumière
             </p>
           </div>
-          <Toggle
-            selectedTab={roomData.light_state ? '0' : '1'}
-            onTabChange={handleLightState}
-          />
+          {
+            isAdmin ? (
+              <Toggle
+                selectedTab={roomData.light_state ? '0' : '1'}
+                onTabChange={handleLightState}
+              />
+            ) : null
+          }
         </div>
         <div className="container-box room-controller room-controller-toggle">
           <div className="room-controller-toggle-text">
@@ -144,28 +151,39 @@ function Room() {
             </p>
           </div>
           <div className="room-controller-toggle-control">
-            <button
-              id="btnDecreaseHeater"
-              className="room-controller-toggle-control-button"
-              onClick={() => handleChangeState('heater', 'decrease')}
-              disabled={roomData.heater_state === 0}
-            >
-              <p>-</p>
-            </button>
+            {
+              isAdmin ? (
+                <button
+                  id="btnDecreaseHeater"
+                  className="room-controller-toggle-control-button"
+                  onClick={() => handleChangeState('heater', 'decrease')}
+                  disabled={roomData.heater_state === 0}
+                >
+                  <p>-</p>
+                </button>
+              ) : null
+            }
             <p>
               <span className="room-controller-number">{roomData.heater_state}</span>
               /6
             </p>
-            <button
-              id="btnIncreaseHeater"
-              className="room-controller-toggle-control-button"
-              onClick={() => handleChangeState('heater', 'increase')}
-              disabled={roomData.heater_state === 6}
-            >
-              <p>+</p>
-            </button>
+            {
+              isAdmin ? (
+                <button
+                  id="btnIncreaseHeater"
+                  className="room-controller-toggle-control-button"
+                  onClick={() => handleChangeState('heater', 'increase')}
+                  disabled={roomData.heater_state === 6}
+                >
+                  <p>+</p>
+                </button>
+              ) : null
+            }
           </div>
         </div>
+      </div>
+      <div className="container-page-content-row">
+
         <div className="container-box room-controller room-controller-toggle">
           <div className="room-controller-toggle-text">
             {
@@ -181,26 +199,79 @@ function Room() {
             </p>
           </div>
           <div className="room-controller-toggle-control">
-            <button
-              id="btnDecreaseAc"
-              className="room-controller-toggle-control-button"
-              onClick={() => handleChangeState('ac', 'decrease')}
-              disabled={roomData.ac_state === 0}
-            >
-              <p>-</p>
-            </button>
+            {
+              isAdmin ? (
+                <button
+                  id="btnDecreaseAc"
+                  className="room-controller-toggle-control-button"
+                  onClick={() => handleChangeState('ac', 'decrease')}
+                  disabled={roomData.ac_state === 0}
+                >
+                  <p>-</p>
+                </button>
+              ) : null
+            }
             <p>
               <span className="room-controller-number">{roomData.ac_state}</span>
               /6
             </p>
-            <button
-              id="btnIncreaseAc"
-              className="room-controller-toggle-control-button"
-              onClick={() => handleChangeState('ac', 'increase')}
-              disabled={roomData.ac_state === 6}
+            {
+              isAdmin ? (
+                <button
+                  id="btnIncreaseAc"
+                  className="room-controller-toggle-control-button"
+                  onClick={() => handleChangeState('ac', 'increase')}
+                  disabled={roomData.ac_state === 6}
+                >
+                  <p>+</p>
+                </button>
+              ) : null
+            }
+          </div>
+        </div>
+        <div className="container-box room-controller room-controller-toggle">
+          <div className="room-controller-toggle-text">
+            {
+              roomData.vent_state > 0
+                ? <img className="icon-ac" src="../../public/images/icons/ventilation-icon-blue.svg" />
+                : <img className="icon-ac" src="../../public/images/icons/ventilation-icon.svg" />
+            }
+            <p
+              className="room-controller-bar-text-title size-18 font-bold"
+              style={roomData.vent_state > 0 ? { color: '#10002B' } : null}
             >
-              <p>+</p>
-            </button>
+              Ventilation
+            </p>
+          </div>
+          <div className="room-controller-toggle-control">
+            {
+              isAdmin ? (
+                <button
+                  id="btnDecreaseAc"
+                  className="room-controller-toggle-control-button"
+                  onClick={decreaseVent}
+                  disabled={roomData.vent_state === 0}
+                >
+                  <p>-</p>
+                </button>
+              ) : null
+            }
+            <p>
+              <span className="room-controller-number">{roomData.vent_state}</span>
+              /6
+            </p>
+            {
+              isAdmin ? (
+                <button
+                  id="btnIncreaseAc"
+                  className="room-controller-toggle-control-button"
+                  onClick={increaseVent}
+                  disabled={roomData.vent_state === 12}
+                >
+                  <p>+</p>
+                </button>
+              ) : null
+            }
           </div>
         </div>
       </div>
