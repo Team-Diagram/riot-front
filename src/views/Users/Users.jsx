@@ -1,11 +1,14 @@
 import { Button } from '@tremor/react'
 import { PlusCircleIcon } from '@heroicons/react/solid'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SelectInput, ModalUser } from 'src/components'
 import {
-  fetchUsers, deleteUser, addUser, changeRole,
-} from '../../controllers/index'
-import { getUserData } from '../../utils'
+  fetchUsers,
+  deleteUser,
+  addUser,
+  changeRole,
+} from 'src/controllers/index'
+import { getUserData } from 'src/utils'
 
 function Users() {
   const [users, setUsers] = useState([])
@@ -51,7 +54,13 @@ function Users() {
     <div>
       <div className="head-container">
         <h1>Gestion Utilisateurs</h1>
-        <Button variant="primary" className="add-user" iconPosition="right" icon={PlusCircleIcon} onClick={() => setIsModal(true)}>
+        <Button
+          variant="primary"
+          className="add-user"
+          iconPosition="right"
+          icon={PlusCircleIcon}
+          onClick={() => setIsModal(true)}
+        >
           Ajouter des utilisateurs
         </Button>
       </div>
@@ -83,7 +92,11 @@ function Users() {
                   <td className="table-user__cell">{user.lastName}</td>
                   <td className="table-user__cell">{user.email}</td>
                   <td className="table-user__cell">
-                    <Button variant="secondary" color="red" onClick={() => handleDeleteUser(user.id)}>
+                    <Button
+                      variant="secondary"
+                      color="red"
+                      onClick={() => handleDeleteUser(user.id)}
+                    >
                       Supprimer
                     </Button>
                   </td>

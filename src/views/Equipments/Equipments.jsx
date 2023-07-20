@@ -1,10 +1,10 @@
 import { Icon } from '@tremor/react'
 import { FireIcon, LightBulbIcon } from '@heroicons/react/outline'
-import {TableGlobal, SelectInput, Alert} from 'src/components'
+import { TableGlobal } from 'src/components'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import fetchEquipments from '../../controllers/EquipmentController'
-import fetchNotifications from "../../controllers/NotificationController.js";
+import fetchEquipments from 'src/controllers/EquipmentController'
+import fetchNotifications from 'src/controllers/NotificationController'
 
 function Equipments() {
   const [equipmentsData, setEquipmentsData] = useState([])
@@ -24,9 +24,7 @@ function Equipments() {
 
   const navigate = useNavigate()
 
-  // eslint-disable-next-line camelcase
   const handleRoomClick = (item) => {
-    // eslint-disable-next-line camelcase
     navigate(`/equipements/salle/${item.place_name}`)
   }
 
@@ -43,7 +41,8 @@ function Equipments() {
     mapGeneral.style.opacity = '1'
   }
 
-  const filteredNotificationData = notificationData.filter((notification) => notification.data.placeId === equipmentsData.place_id)
+  const filteredNotificationData = notificationData
+    .filter((notification) => notification.data.placeId === equipmentsData.place_id)
 
   const renderEquipementsCell = (item) => (
     <div className="table-cell-equipements">

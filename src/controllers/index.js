@@ -1,6 +1,10 @@
 import fetchStatistics from './StatisticsController'
 import {
-  fetchUsers, deleteUser, addUser, changeRole, updateUser,
+  fetchUsers,
+  deleteUser,
+  addUser,
+  changeRole,
+  updateUser,
 } from './UsersController'
 import fetchEquipments from './EquipmentController'
 import fetchEquipmentsState from './VariatorEquipment'

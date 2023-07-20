@@ -1,6 +1,4 @@
-/* eslint-disable arrow-body-style */
-
-const fetchEquipmentsState = (token, target, placeId,valueVariator) => {
+function fetchEquipmentsState(token, target, placeId, valueVariator) {
   return fetch(`${import.meta.env.VITE_API_BASE_URL}/api/switch/${target}`, {
     method: 'POST',
     body: JSON.stringify({

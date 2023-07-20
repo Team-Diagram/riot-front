@@ -1,6 +1,6 @@
-import { Button } from '@tremor/react';
-import { ArrowCircleLeftIcon } from "@heroicons/react/solid";
-import { useNavigate } from "react-router-dom";
+import { Button } from '@tremor/react'
+import { ArrowCircleLeftIcon } from '@heroicons/react/solid'
+import { useNavigate } from 'react-router-dom'
 
 function BackLink({ url }) {
   const navigate = useNavigate()

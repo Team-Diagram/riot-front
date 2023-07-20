@@ -1,6 +1,8 @@
-// AuthProvider.js
 import {
-  createContext, useState, useEffect, useMemo,
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
 } from 'react'
 
 export const AuthContext = createContext()

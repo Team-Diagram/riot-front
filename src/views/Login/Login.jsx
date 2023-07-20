@@ -1,9 +1,7 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@tremor/react'
-import { AuthContext } from '../../AuthContext/AuthContext'
+import { AuthContext } from 'src/AuthContext/AuthContext'
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -13,7 +11,6 @@ function Login() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    // If the user is already authenticated, redirect to the home page
     if (isAuthenticated) {
       navigate('/')
     }
@@ -39,7 +36,7 @@ function Login() {
         <h1 className="text-left login-title">RioT</h1>
         <form className="container-box login-content">
           <h2>Se connecter</h2>
-          <label>
+          <label htmlFor="username">
             Adresse mail
             <input
               type="text"
@@ -50,7 +47,7 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
-          <label>
+          <label htmlFor="password">
             Mot de passe
             <input
               type="password"
@@ -61,7 +58,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="primary" onClick={(event) => handleSubmit(event)}>
             Se connecter
           </Button>
           {error && <p className="error">{error}</p>}

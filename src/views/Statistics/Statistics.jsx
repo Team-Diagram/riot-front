@@ -1,7 +1,7 @@
 import { AreaChart } from '@tremor/react'
 import { useEffect, useState } from 'react'
-import { fetchStatistics } from '../../controllers'
-import { SelectInput } from '../../components'
+import { fetchStatistics } from 'src/controllers'
+import { SelectInput } from 'src/components'
 
 function Statistics() {
   const [value, setValue] = useState('')
@@ -10,11 +10,18 @@ function Statistics() {
   const [money, setMoney] = useState()
   const inputData = ['Semaine', 'Mois', 'Année']
 
-  // Bon on a un peu menti sur la data mais oklm
   const days = {
     ecoWatt: '72',
     ecoMoney: '34',
-    label: ['Samedi 15', 'Dimanche 16', 'Lundi 17', 'Mardi 18', 'Mercredi 19', 'Jeudi 20', 'Vendredi 23'],
+    label: [
+      'Samedi 15',
+      'Dimanche 16',
+      'Lundi 17',
+      'Mardi 18',
+      'Mercredi 19',
+      'Jeudi 20',
+      'Vendredi 23',
+    ],
   }
 
   const weeks = {
@@ -26,7 +33,20 @@ function Statistics() {
   const month = {
     ecoWatt: '4 344',
     ecoMoney: '2 303',
-    label: ['Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'],
+    label: [
+      'Août',
+      'Septembre',
+      'Octobre',
+      'Novembre',
+      'Décembre',
+      'Janvier',
+      'Février',
+      'Mars',
+      'Avril',
+      'Mai',
+      'Juin',
+      'Juillet',
+    ],
   }
 
   useEffect(() => {
@@ -81,7 +101,9 @@ function Statistics() {
         <div className="container-box">
           <div>
             <h2>Économie d'énergie</h2>
-            <p className="size-16">Économie d'énergie estimée par rapport à une gestion sans iot</p>
+            <p className="size-16">
+              Économie d'énergie estimée par rapport à une gestion sans iot
+            </p>
           </div>
           <p className="statistics__value">
             {watt}
@@ -91,7 +113,9 @@ function Statistics() {
         <div className="container-box">
           <div>
             <h2>Économie financière</h2>
-            <p className="size-16">Économie financière estimée par rapport à une gestion sans iot</p>
+            <p className="size-16">
+              Économie financière estimée par rapport à une gestion sans iot
+            </p>
           </div>
           <p className="statistics__value">
             {money}

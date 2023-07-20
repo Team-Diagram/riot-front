@@ -1,20 +1,23 @@
 import {
-  Callout,
-  Icon, MarkerBar, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow,
+  Icon,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableRow,
 } from '@tremor/react'
 import { useParams } from 'react-router-dom'
 import { Alert, BackLink, Toggle } from 'src/components'
-import { ExclamationCircleIcon } from '@heroicons/react/solid'
 import { FireIcon, LightBulbIcon } from '@heroicons/react/outline'
 import { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
-import fetchEquipments from '../../controllers/EquipmentController.js'
-import fetchEquipmentsState from '../../controllers/VariatorEquipment.js'
-import fetchNotifications from '../../controllers/NotificationController.js'
+import fetchEquipments from 'src/controllers/EquipmentController'
+import fetchEquipmentsState from 'src/controllers/VariatorEquipment'
 
 function Room() {
   const [equipmentsData, setEquipmentsData] = useState([])
-  const [notificationData, setNotificationData] = useState([])
+  const [notificationData] = useState([])
   const headers = ['Température', 'Taux CO2', 'Luminosité', 'Consommation', 'Nombre de personnes']
 
   useEffect(() => {
@@ -23,19 +26,10 @@ function Room() {
         .then((jsonData) => {
           setEquipmentsData(jsonData.message)
         })
-        .catch((error) => {
-          console.error('Erreur lors de la récupération des équipements :', error)
-        })
     }
     fetchData()
     const intervalId = setInterval(fetchData, 31 * 1000)
     return () => clearInterval(intervalId)
-
-    // eslint-disable-next-line no-unreachable
-    fetchNotifications()
-      .then((jsonData) => {
-        setNotificationData(jsonData.message)
-      })
   }, [])
 
   const { id } = useParams()
@@ -58,7 +52,9 @@ function Room() {
     const updatedEquipmentsData = [...equipmentsData]
     const targetPlaceId = roomData.place_id
     const targetIndex = updatedEquipmentsData.findIndex((item) => item.place_id === targetPlaceId)
+
     updatedEquipmentsData[targetIndex].light_state = !updatedEquipmentsData[targetIndex].light_state
+
     setEquipmentsData(updatedEquipmentsData)
 
     fetch(`${import.meta.env.VITE_API_BASE_URL}/switch/light`, {
@@ -72,14 +68,10 @@ function Room() {
       },
     })
       .then((response) => response.json())
-      .then(() => {
-      })
-      .catch((error) => {
-        console.error(error)
-      })
   }
 
-  const temperatureData = roomData.measure_values.find((measure) => 'temperature' in measure).temperature
+  const temperatureData = roomData.measure_values
+    .find((measure) => 'temperature' in measure).temperature
   const co2Data = roomData.measure_values.find((measure) => 'co2' in measure).co2
   const luminositeData = roomData.measure_values.find((measure) => 'lux' in measure).lux
   const kwhData = roomData.measure_values.find((measure) => 'kwh' in measure).kwh
@@ -103,22 +95,39 @@ function Room() {
       updatedEquipmentsData[targetIndex][`${target}_state`] = value
       setEquipmentsData(updatedEquipmentsData)
       if (target === 'ac') {
-        fetchEquipmentsState(token, 'climatisation', targetPlaceId, updatedEquipmentsData[targetIndex][`${target}_state`])
+        fetchEquipmentsState(
+          token,
+          'climatisation',
+          targetPlaceId,
+          updatedEquipmentsData[targetIndex][`${target}_state`],
+        )
       } else {
-        fetchEquipmentsState(token, target, targetPlaceId, updatedEquipmentsData[targetIndex][`${target}_state`])
+        fetchEquipmentsState(
+          token,
+          target,
+          targetPlaceId,
+          updatedEquipmentsData[targetIndex][`${target}_state`],
+        )
       }
     }
   }
 
-  const filteredNotificationData = notificationData.filter((notification) => notification.data.placeId === roomData.place_id)
+  const filteredNotificationData = notificationData
+    .filter((notification) => notification.data.placeId === roomData.place_id)
 
   const dateAlert = () => {
     const dateInput = '2023-07-12 11:28:22'
     const dateObj = new Date(dateInput)
     const addZero = (number) => (number < 10 ? `0${number}` : number)
-    const formattedDate = `${addZero(dateObj.getDate())}/${addZero(dateObj.getMonth() + 1)}/${dateObj.getFullYear()}
-     à ${addZero(dateObj.getHours())}h${addZero(dateObj.getMinutes())}`
-    return formattedDate
+    const date = {
+      day: addZero(dateObj.getDate()),
+      month: addZero(dateObj.getMonth() + 1),
+      fullYear: dateObj.getFullYear(),
+      hours: addZero(dateObj.getHours()),
+      min: addZero(dateObj.getMinutes()),
+    }
+
+    return `${date.day}/${date.month}/${date.fullYear} à ${date.hours}h${date.min}`
   }
 
   return (
@@ -189,6 +198,7 @@ function Room() {
             {
               isAdmin ? (
                 <button
+                  type="button"
                   id="btnDecreaseHeater"
                   className="room-controller-toggle-control-button"
                   onClick={() => handleChangeState('heater', 'decrease')}
@@ -205,6 +215,7 @@ function Room() {
             {
               isAdmin ? (
                 <button
+                  type="button"
                   id="btnIncreaseHeater"
                   className="room-controller-toggle-control-button"
                   onClick={() => handleChangeState('heater', 'increase')}
@@ -237,6 +248,7 @@ function Room() {
             {
               isAdmin ? (
                 <button
+                  type="button"
                   id="btnDecreaseAc"
                   className="room-controller-toggle-control-button"
                   onClick={() => handleChangeState('ac', 'decrease')}
@@ -253,6 +265,7 @@ function Room() {
             {
               isAdmin ? (
                 <button
+                  type="button"
                   id="btnIncreaseAc"
                   className="room-controller-toggle-control-button"
                   onClick={() => handleChangeState('ac', 'increase')}
@@ -268,8 +281,8 @@ function Room() {
           <div className="room-controller-toggle-text">
             {
               roomData.vent_state > 0
-                ? <img className="icon-ac" src="../../public/images/icons/ventilation-icon-blue.svg" />
-                : <img className="icon-ac" src="../../public/images/icons/ventilation-icon.svg" />
+                ? <img className="icon-ac" src="public/images/icons/ventilation-icon-blue.svg" />
+                : <img className="icon-ac" src="public/images/icons/ventilation-icon.svg" />
             }
             <p
               className="room-controller-bar-text-title size-18 font-bold"
@@ -282,6 +295,7 @@ function Room() {
             {
               isAdmin ? (
                 <button
+                  type="button"
                   id="btnDecreaseAc"
                   className="room-controller-toggle-control-button"
                   onClick={() => handleChangeState('vent', 'decrease')}
@@ -298,6 +312,7 @@ function Room() {
             {
               isAdmin ? (
                 <button
+                  type="button"
                   id="btnIncreaseAc"
                   className="room-controller-toggle-control-button"
                   onClick={() => handleChangeState('vent', 'increase')}

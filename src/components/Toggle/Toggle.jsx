@@ -1,4 +1,4 @@
-import { Tab, TabGroup, TabList } from '@tremor/react';
+import { Tab, TabGroup, TabList } from '@tremor/react'
 
 function Toggle({ selectedTab, onTabChange }) {
   return (

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { Icon, Divider } from '@tremor/react'
@@ -16,10 +15,10 @@ import {
   UsersIconSolid,
   UserIconOutline,
 } from 'src/assets'
-import { AuthContext } from '../../AuthContext/AuthContext'
-import { getUserData } from '../../utils'
-import { ModalUser } from '../index'
-import { updateUser } from '../../controllers'
+import { AuthContext } from 'src/AuthContext/AuthContext'
+import { getUserData } from 'src/utils'
+import { ModalUser } from 'src/components'
+import { updateUser } from 'src/controllers'
 
 function SideBar() {
   const [selectedItem, setSelectedItem] = useState('accueil')
@@ -73,18 +72,13 @@ function SideBar() {
   ]
 
   const handleLogout = async () => {
-    try {
-      logout()
-      navigate('/login')
-    } catch (error) {
-      console.log(error)
-    }
+    logout()
+    navigate('/login')
   }
 
   const handlEditUser = (utilisateur) => {
     const requestBody = {}
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const [key, value] of Object.entries(utilisateur)) {
       if (key !== 'admin' && value !== '') {
         requestBody[key] = value

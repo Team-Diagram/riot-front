@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Button } from '@tremor/react'
 
-function ModalUser({ title, buttonText, action, showModal, handleAddUser, handleEditUser }) {
+function ModalUser({
+  title, buttonText, action, showModal, handleAddUser, handleEditUser,
+}) {
   const [nouvelUtilisateur, setNouvelUtilisateur] = useState({
     first_name: '',
     last_name: '',
@@ -40,7 +42,7 @@ function ModalUser({ title, buttonText, action, showModal, handleAddUser, handle
       <div className="modal-content container-box">
         <div className="modal-content__header">
           <h2>{title}</h2>
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+          { }
           <span
             role="button"
             tabIndex={0}

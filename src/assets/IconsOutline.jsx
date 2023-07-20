@@ -7,8 +7,6 @@ import {
   UserIcon,
 } from '@heroicons/react/outline'
 
-
-// navbar icons
 const HomeIconOutline = HomeIcon
 const ViewGridAddIconOutline = ViewGridAddIcon
 const CalendarIconOutline = CalendarIcon

@@ -7,8 +7,6 @@ import {
     UserIcon,
   } from '@heroicons/react/solid'
 
-
-// navbar icons
 const HomeIconSolid = HomeIcon
 const ViewGridAddIconSolid = ViewGridAddIcon
 const CalendarIconSolid = CalendarIcon

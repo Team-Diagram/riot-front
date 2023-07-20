@@ -19,15 +19,12 @@ import {
 
 
 export {
-    // Navbar outline
     HomeIconOutline,
     ViewGridAddIconOutline,
     CalendarIconOutline,
     ChartPieIconOutline,
     UsersIconOutline,
     UserIconOutline,
-
-    // Navbar outline
     HomeIconSolid,
     ViewGridAddIconSolid,
     CalendarIconSolid,

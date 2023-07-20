@@ -1,8 +1,22 @@
 import {
-  Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableRow,
 } from '@tremor/react'
 
-function TableGlobal({ data, headers, renderCells, onClick, onOverRow, onLeaveRow }) {
+function TableGlobal(props) {
+  const {
+    data,
+    headers,
+    renderCells,
+    onClick,
+    onOverRow,
+    onLeaveRow,
+  } = props
+
   return (
     <Table>
       <TableHead>
@@ -14,22 +28,19 @@ function TableGlobal({ data, headers, renderCells, onClick, onOverRow, onLeaveRo
           ))}
         </TableRow>
       </TableHead>
+
       <TableBody>
         {data.map((item, index) => (
           <TableRow
             key={index}
             className="table-row-equipments"
-            onClick={() => onCLick}
+            onClick={() => onClick}
             onMouseEnter={() => onOverRow(item)}
             onMouseLeave={() => onLeaveRow(item)}
           >
             {headers.map((header, indexHeader) => (
               <TableCell key={indexHeader}>
-                {
-                  renderCells[header]
-                    ? renderCells[header](item)
-                    : item[header]
-                }
+                {renderCells[header] ? renderCells[header](item) : item[header]}
               </TableCell>
             ))}
           </TableRow>

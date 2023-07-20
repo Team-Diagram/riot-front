@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import {
-  Button,
-} from '@tremor/react'
+import { Button } from '@tremor/react'
 import { PlusCircleIcon } from '@heroicons/react/solid'
-import { rooms } from '../../utils'
-import { SelectInput } from '../../components'
+import { rooms } from 'src/utils'
+import { SelectInput } from 'src/components'
 
 function Schedules() {
   const [value, setValue] = useState(rooms[0].label)
@@ -25,7 +23,11 @@ function Schedules() {
           {roomData.label}
         </h1>
         <div className="schedules-top-container__buttons">
-          <SelectInput data={rooms.map((room) => room.label)} onChange={setValue} firstValue={rooms[0].label} />
+          <SelectInput
+            data={rooms.map((room) => room.label)}
+            onChange={setValue}
+            firstValue={rooms[0].label}
+          />
           <Button variant="primary" iconPosition="right" icon={PlusCircleIcon}>
             Ajouter des créneaux
           </Button>

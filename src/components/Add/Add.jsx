@@ -2,6 +2,7 @@ function Add({ slug, columns }) {
   const handleSubmit = (e) => {
     e.preventDefault()
   }
+
   return (
     <div className="add">
       <div className="modal">

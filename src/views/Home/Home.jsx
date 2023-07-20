@@ -1,13 +1,11 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useEffect, useState } from 'react'
 import { Icon } from '@tremor/react'
 import { FireIcon, LightBulbIcon } from '@heroicons/react/outline'
-import { getUserData, rooms } from '../../utils'
-import { fetchEquipments, fetchErrors, shutDownPlace } from '../../controllers'
-import { Alert, TableGlobal, Toggle } from '../../components/index'
+import { getUserData, rooms } from 'src/utils'
+import { fetchEquipments, fetchErrors, shutDownPlace } from 'src/controllers'
+import { Alert, TableGlobal, Toggle } from 'src/components/index'
 
 function Home() {
   const [roomData, setRoomData] = useState(rooms[0].hours)
@@ -32,8 +30,11 @@ function Home() {
       <div className="table-cell-equipements-icons">
         <Icon icon={LightBulbIcon} color={item.light_state ? 'yellow' : 'default'} />
         <Icon icon={FireIcon} color={item.heater_state ? 'orange' : 'default'} />
-        <img src={`./public/images/icons/clim-${item.ac_state > 0 ? 'icon-blue' : 'icon'}.svg`} alt="" />
-        <img src={`./public/images/icons/ventilation-${item.vent_state > 0 ? 'icon-blue' : 'icon'}.svg`} alt="" />
+        <img src={`./public/images/icons/clim-${item.ac_state > 0 ? 'icon-blue' : 'icon'}.svg`} />
+        <img src={`./public/images/icons/ventilation-${
+          item.vent_state > 0 ? 'icon-blue' : 'icon'
+        }.svg`}
+        />
       </div>
     </div>
   )
@@ -56,9 +57,17 @@ function Home() {
     }
   }
 
-  const renderOccupationCell = (item) => <p onClick={() => setValue(item.place_name)}>{item.people_count}</p>
+  const renderOccupationCell = (item) => (
+    <p onClick={() => setValue(item.place_name)}>
+      {item.people_count}
+    </p>
+  )
 
-  const renderSalleCell = (item) => <p onClick={() => setValue(item.place_name)}>{item.place_name}</p>
+  const renderSalleCell = (item) => (
+    <p onClick={() => setValue(item.place_name)}>
+      {item.place_name}
+    </p>
+  )
 
   const renderCells = {
     Lieux: renderSalleCell,

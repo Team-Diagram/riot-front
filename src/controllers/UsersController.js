@@ -1,7 +1,6 @@
-/* eslint-disable arrow-body-style */
 import jwtDecode from 'jwt-decode'
 
-const fetchUsers = (token) => {
+async function fetchUsers(token) {
   const headers = {
     'Content-type': 'application/x-www-form-urlencoded',
   }
@@ -9,15 +8,10 @@ const fetchUsers = (token) => {
 
   return fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/all`, { headers })
     .then((response) => response.json())
-    .then((data) => {
-      return data
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+    .then((data) => data)
 }
 
-const deleteUser = async (id, token) => {
+async function deleteUser(id, token) {
   const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/user/delete/${id}`
 
   await fetch(apiUrl, {
@@ -25,11 +19,10 @@ const deleteUser = async (id, token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
-    .then((response) => response.json())
+  }).then((response) => response.json())
 }
 
-const addUser = async (user, token) => {
+async function addUser(user, token) {
   const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/user`
 
   await fetch(apiUrl, {
@@ -45,11 +38,10 @@ const addUser = async (user, token) => {
       password: user.password,
       admin: user.admin === 'on',
     }),
-  })
-    .then((response) => response.json())
+  }).then((response) => response.json())
 }
 
-const changeRole = (selectedRole, uuid, token) => {
+async function changeRole(selectedRole, uuid, token) {
   fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/update/${uuid}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -60,11 +52,10 @@ const changeRole = (selectedRole, uuid, token) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-  })
-    .then((response) => response.json())
+  }).then((response) => response.json())
 }
 
-const updateUser = (requestBody, currentToken) => {
+async function updateUser(requestBody, currentToken) {
   const { uuid } = jwtDecode(currentToken)
 
   fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/update/${uuid}`, {
@@ -80,14 +71,13 @@ const updateUser = (requestBody, currentToken) => {
         localStorage.setItem('token', data.token)
       }
     })
-    .then(() => {
-      window.location.reload()
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+    .then(() => { window.location.reload() })
 }
 
 export {
-  fetchUsers, deleteUser, addUser, changeRole, updateUser,
+  fetchUsers,
+  deleteUser,
+  addUser,
+  changeRole,
+  updateUser,
 }
