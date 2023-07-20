@@ -1,4 +1,5 @@
 /* eslint-disable arrow-body-style */
+import jwtDecode from 'jwt-decode'
 
 const fetchUsers = (token) => {
   const headers = {
@@ -63,6 +64,30 @@ const changeRole = (selectedRole, uuid, token) => {
     .then((response) => response.json())
 }
 
+const updateUser = (requestBody, currentToken) => {
+  const { uuid } = jwtDecode(currentToken)
+
+  fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/update/${uuid}`, {
+    method: 'PUT',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${currentToken}`,
+    },
+  }).then((response) => response.json())
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem('token', data.token)
+      }
+    })
+    .then(() => {
+      window.location.reload()
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
+
 export {
-  fetchUsers, deleteUser, addUser, changeRole,
+  fetchUsers, deleteUser, addUser, changeRole, updateUser,
 }
