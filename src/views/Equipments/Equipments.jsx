@@ -43,7 +43,7 @@ function Equipments() {
     mapGeneral.style.opacity = '1'
   }
 
-  const filteredNotificationData = notificationData.filter((notification) => notification.data.placeId === roomData.place_id)
+  const filteredNotificationData = notificationData.filter((notification) => notification.data.placeId === equipmentsData.place_id)
 
   const renderEquipementsCell = (item) => (
     <div className="table-cell-equipements">
