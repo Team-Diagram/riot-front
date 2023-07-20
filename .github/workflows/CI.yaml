@@ -34,7 +34,7 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: install dependencies
-        run: npm ci
+        run: npm install
       - name: save node_modules cache
         uses: actions/cache/save@v3
         with:
