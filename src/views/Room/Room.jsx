@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import fetchEquipments from '../../controllers/EquipmentController.js'
 import fetchEquipmentsState from '../../controllers/VariatorEquipment.js'
-import fetchNotifications from "../../controllers/NotificationController.js";
+import fetchNotifications from '../../controllers/NotificationController.js'
 
 function Room() {
   const [equipmentsData, setEquipmentsData] = useState([])
@@ -38,10 +38,9 @@ function Room() {
       })
   }, [])
 
-
   const { id } = useParams()
   const roomData = equipmentsData.find((item) => item.place_name === id)
-  
+
   if (!roomData) {
     return <p>Salle en cours de chargement</p>
   }
@@ -53,16 +52,15 @@ function Room() {
 
   if (decodedToken.roles.includes('ROLE_ADMIN')) {
     isAdmin = true
-    // setShowAdminControl(true)
   }
 
   const handleLightState = () => {
-    const updatedEquipmentsData = [...equipmentsData];
-    const targetPlaceId = roomData.place_id;
-    const targetIndex = updatedEquipmentsData.findIndex(item => item.place_id === targetPlaceId);
-    updatedEquipmentsData[targetIndex].light_state = !updatedEquipmentsData[targetIndex].light_state;
+    const updatedEquipmentsData = [...equipmentsData]
+    const targetPlaceId = roomData.place_id
+    const targetIndex = updatedEquipmentsData.findIndex((item) => item.place_id === targetPlaceId)
+    updatedEquipmentsData[targetIndex].light_state = !updatedEquipmentsData[targetIndex].light_state
     setEquipmentsData(updatedEquipmentsData)
-    
+
     fetch(`${import.meta.env.VITE_API_BASE_URL}/switch/light`, {
       method: 'POST',
       body: JSON.stringify({
@@ -81,31 +79,38 @@ function Room() {
       })
   }
 
-  const tempeatureRound = Math.round(roomData.measure_values[1].temperature)
-  const luminositeRound = Math.round(roomData.measure_values[2].lux)
+  const temperatureData = roomData.measure_values.find((measure) => 'temperature' in measure).temperature
+  const co2Data = roomData.measure_values.find((measure) => 'co2' in measure).co2
+  const luminositeData = roomData.measure_values.find((measure) => 'lux' in measure).lux
+  const kwhData = roomData.measure_values.find((measure) => 'kwh' in measure).kwh
 
-  const handleChangeState = (target,action)=>{
-    const updatedEquipmentsData = [...equipmentsData];
-    const targetPlaceId = roomData.place_id;
-    const targetIndex = updatedEquipmentsData.findIndex(item => item.place_id === targetPlaceId);
+  const tempeatureRound = Math.round(temperatureData)
+  const luminositeRound = Math.round(luminositeData)
+
+  const handleChangeState = (target, action) => {
+    const updatedEquipmentsData = [...equipmentsData]
+    const targetPlaceId = roomData.place_id
+    const targetIndex = updatedEquipmentsData.findIndex((item) => item.place_id === targetPlaceId)
     let value = updatedEquipmentsData[targetIndex][`${target}_state`]
 
-    if(action === 'increase'){
-      value +=1
-    }else{
-      value -=1
+    if (action === 'increase') {
+      value += 1
+    } else {
+      value -= 1
     }
 
     if (targetIndex !== -1) {
-      updatedEquipmentsData[targetIndex][`${target}_state`] = value;
-      setEquipmentsData(updatedEquipmentsData);
-      if(target === 'ac'){
-        fetchEquipmentsState(token,'climatisation',targetPlaceId,updatedEquipmentsData[targetIndex][`${target}_state`])
-      }else{
-        fetchEquipmentsState(token,target,targetPlaceId,updatedEquipmentsData[targetIndex][`${target}_state`])
+      updatedEquipmentsData[targetIndex][`${target}_state`] = value
+      setEquipmentsData(updatedEquipmentsData)
+      if (target === 'ac') {
+        fetchEquipmentsState(token, 'climatisation', targetPlaceId, updatedEquipmentsData[targetIndex][`${target}_state`])
+      } else {
+        fetchEquipmentsState(token, target, targetPlaceId, updatedEquipmentsData[targetIndex][`${target}_state`])
       }
     }
   }
+
+  const filteredNotificationData = notificationData.filter((notification) => notification.data.placeId === roomData.place_id)
 
   const dateAlert = () => {
     const dateInput = '2023-07-12 11:28:22'
@@ -129,19 +134,18 @@ function Room() {
         </h1>
       </div>
       {
-         roomData.place_name
-           ? (
-             <div className="container-page-content-row">
-               {notificationData.map((notification, index) => (
-                 <Alert
-                   key={index}
-                   Title={notification.data.info}
-                   Text={dateAlert}
-                 />
-               ))}
-             </div>
-           )
-           : null
+        filteredNotificationData.length > 0 ? (
+          <div className="container-page-content-row">
+            {filteredNotificationData.map((notification, index) => (
+              <Alert
+                key={index}
+                Title={notification.data.info}
+                Text={dateAlert}
+              />
+            ))}
+          </div>
+        )
+          : null
       }
       <div className="container-page-content-row">
         <div className="container-box room-controller room-controller-toggle">
@@ -149,7 +153,7 @@ function Room() {
             {
               roomData.light_state
                 ? <Icon icon={LightBulbIcon} size="lg" color="yellow" />
-                : <Icon icon={LightBulbIcon} size="lg" color="default" />
+                : <Icon icon={LightBulbIcon} size="lg" color="stone" />
             }
             <p
               className="room-controller-bar-text-title size-18 font-bold"
@@ -172,7 +176,7 @@ function Room() {
             {
               roomData.heater_state > 0
                 ? <Icon size="lg" icon={FireIcon} color="orange" />
-                : <Icon size="lg" icon={FireIcon} color="default" />
+                : <Icon size="lg" icon={FireIcon} color="stone" />
             }
             <p
               className="room-controller-bar-text-title size-18 font-bold"
@@ -325,7 +329,7 @@ function Room() {
                 °C
               </TableCell>
               <TableCell>
-                {roomData.measure_values[0].co2}
+                {co2Data}
                 ppm
               </TableCell>
               <TableCell>
@@ -333,10 +337,10 @@ function Room() {
                 Lux
               </TableCell>
               <TableCell>
-                {roomData.measure_values[9].kwh}
+                {kwhData}
                 KwH
               </TableCell>
-              {/* <TableCell>{roomData.measure_values[11].persons}</TableCell> */}
+              <TableCell>{roomData.people_count}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

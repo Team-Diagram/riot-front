@@ -1,10 +1,21 @@
 h1, h2, h3, h4, h5, h6{
   line-height: 1.3em;
 }
-p, input, select, label, a, li{
+p, input, select, label, a, li,{
   line-height: 1.5em;
   font-size: 16px;
   color: $grey
+}
+
+.tremor-TableRow-row th{
+  line-height: 1.5em;
+  font-size: 16px;
+  color: $black;
+}
+.tremor-TableRow-row td{
+  line-height: 1.5em;
+  font-size: 16px;
+  color: $grey;
 }
 
 body h1 {

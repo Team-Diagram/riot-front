@@ -1,17 +1,24 @@
 import { Icon } from '@tremor/react'
 import { FireIcon, LightBulbIcon } from '@heroicons/react/outline'
-import { TableGlobal, SelectInput } from 'src/components'
+import {TableGlobal, SelectInput, Alert} from 'src/components'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import fetchEquipments from '../../controllers/EquipmentController'
+import fetchNotifications from "../../controllers/NotificationController.js";
 
 function Equipments() {
   const [equipmentsData, setEquipmentsData] = useState([])
+  const [notificationData, setNotificationData] = useState([])
 
   useEffect(() => {
     fetchEquipments()
       .then((jsonData) => {
         setEquipmentsData(jsonData.message)
+      })
+
+    fetchNotifications()
+      .then((jsonData) => {
+        setNotificationData(jsonData.message)
       })
   }, [])
 
@@ -35,6 +42,8 @@ function Equipments() {
     mapOver.style.opacity = '0'
     mapGeneral.style.opacity = '1'
   }
+
+  const filteredNotificationData = notificationData.filter((notification) => notification.data.placeId === roomData.place_id)
 
   const renderEquipementsCell = (item) => (
     <div className="table-cell-equipements">
@@ -64,14 +73,13 @@ function Equipments() {
         }
       </div>
       {
-              item.light_state
-                ? (
-                  <div className="table-cell-equipements-alert">
-                    <img src="./public/images/icons/alert-icon.svg" />
-                  </div>
-                )
-                : null
-            }
+        filteredNotificationData.length > 0 ? (
+          <div className="table-cell-equipements-alert">
+            <img src="./public/images/icons/alert-icon.svg" />
+          </div>
+        )
+          : null
+      }
     </div>
 
   )

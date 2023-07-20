@@ -123,7 +123,7 @@ function SideBar() {
       <div className="container-box h-full flex flex-col justify-between">
         <div className="sidebar-top">
           <div className="sidebar-top__logo">
-            <span>RIOT</span>
+            <h1>Riot</h1>
           </div>
 
           <div className="sidebar-top__pages">
@@ -142,7 +142,7 @@ function SideBar() {
                           color="default"
                           icon={selectedItem === item.id ? item.iconSolid : item.iconOutline}
                         />
-                        <p className="size-18">{item.text}</p>
+                        <p className="size-16">{item.text}</p>
                       </Link>
                     </li>
                   )
@@ -156,7 +156,7 @@ function SideBar() {
           <div className="user-container">
             <button type="button" onClick={() => setIsModal(true)}>
               <div className="user-container__top">
-                <Icon icon={UserIconOutline} color="default" />
+                <Icon icon={UserIconOutline} color="black" />
                 <p className="size-18">{userData.lastName}</p>
               </div>
               <div className="user-container__bottom">
