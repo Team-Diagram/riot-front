@@ -9,7 +9,7 @@ export default defineConfig({
       public: '/public',
     },
   },
-  base: './',
+  base: '',
   server: {
     host: true,
     port: 8080,
