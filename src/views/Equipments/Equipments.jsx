@@ -5,6 +5,24 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import fetchEquipments from 'src/controllers/EquipmentController'
 import fetchNotifications from 'src/controllers/NotificationController'
+import climIconBlue from 'src/assets/images/icons/clim-icon-blue.svg'
+import climIcon from 'src/assets/images/icons/clim-icon.svg'
+import planBatiment from 'src/assets/images/maps/plan-batiment.svg'
+import ventilationIconBlue from 'src/assets/images/icons/ventilation-icon-blue.svg'
+import ventilationIcon from 'src/assets/images/icons/ventilation-icon.svg'
+import A104 from 'src/assets/images/maps/A104.svg'
+import A105 from 'src/assets/images/maps/A105.svg'
+import A106 from 'src/assets/images/maps/A106.svg'
+import A107 from 'src/assets/images/maps/A107.svg'
+import A108 from 'src/assets/images/maps/A108.svg'
+import A109 from 'src/assets/images/maps/A109.svg'
+import A110 from 'src/assets/images/maps/A110.svg'
+import A111 from 'src/assets/images/maps/A111.svg'
+import A112 from 'src/assets/images/maps/A112.svg'
+import A113 from 'src/assets/images/maps/A113.svg'
+import alertIcon from 'src/assets/images/icons/alert-icon.svg'
+import CAFET from 'src/assets/images/maps/CAFET.svg'
+import TRAVAIL from 'src/assets/images/maps/TRAVAIL.svg'
 
 function Equipments() {
   const [equipmentsData, setEquipmentsData] = useState([])
@@ -61,20 +79,20 @@ function Equipments() {
 
         {
           item.ac_state > 0
-            ? <img src="./public/images/icons/clim-icon-blue.svg" />
-            : <img src="./public/images/icons/clim-icon.svg" />
+            ? <img src={climIconBlue} />
+            : <img src={climIcon} />
         }
 
         {
           item.vent_state > 0
-            ? <img src="./public/images/icons/ventilation-icon-blue.svg" />
-            : <img src="./public/images/icons/ventilation-icon.svg" />
+            ? <img src={ventilationIconBlue} />
+            : <img src={ventilationIcon} />
         }
       </div>
       {
         filteredNotificationData.length > 0 ? (
           <div className="table-cell-equipements-alert">
-            <img src="./public/images/icons/alert-icon.svg" />
+            <img src={alertIcon} />
           </div>
         )
           : null
@@ -96,19 +114,19 @@ function Equipments() {
       <div className="container-page-content-row equipement-content">
         <div className="container-box equipement-content-map">
           <div className="equipement-content-map-image">
-            <img id="mapAll" src="./public/images/maps/plan-batiment.svg" alt="Plan du bâtiment" />
-            <img id="mapA104" src="./public/images/maps/A104.svg" alt="Plan du bâtiment" />
-            <img id="mapA105" src="./public/images/maps/A105.svg" alt="Plan du bâtiment" />
-            <img id="mapA106" src="./public/images/maps/A106.svg" alt="Plan du bâtiment" />
-            <img id="mapA107" src="./public/images/maps/A107.svg" alt="Plan du bâtiment" />
-            <img id="mapA108" src="./public/images/maps/A108.svg" alt="Plan du bâtiment" />
-            <img id="mapA109" src="./public/images/maps/A109.svg" alt="Plan du bâtiment" />
-            <img id="mapA110" src="./public/images/maps/A110.svg" alt="Plan du bâtiment" />
-            <img id="mapA111" src="./public/images/maps/A111.svg" alt="Plan du bâtiment" />
-            <img id="mapA112" src="./public/images/maps/A112.svg" alt="Plan du bâtiment" />
-            <img id="mapA113" src="./public/images/maps/A113.svg" alt="Plan du bâtiment" />
-            <img id="mapCAFET" src="./public/images/maps/CAFET.svg" alt="Plan du bâtiment" />
-            <img id="mapTRAVAIL" src="./public/images/maps/TRAVAIL.svg" alt="Plan du bâtiment" />
+            <img id="mapAll" src={planBatiment} />
+            <img id="mapA104" src={A104} />
+            <img id="mapA105" src={A105} />
+            <img id="mapA106" src={A106} />
+            <img id="mapA107" src={A107} />
+            <img id="mapA108" src={A108} />
+            <img id="mapA109" src={A109} />
+            <img id="mapA110" src={A110} />
+            <img id="mapA111" src={A111} />
+            <img id="mapA112" src={A112} />
+            <img id="mapA113" src={A113} />
+            <img id="mapCAFET" src={CAFET} />
+            <img id="mapTRAVAIL" src={TRAVAIL} />
           </div>
         </div>
         <div className="container-box equipement-content-salles">
