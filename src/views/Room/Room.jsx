@@ -14,11 +14,41 @@ import { useEffect, useState } from 'react'
 import jwtDecode from 'jwt-decode'
 import fetchEquipments from 'src/controllers/EquipmentController'
 import fetchEquipmentsState from 'src/controllers/VariatorEquipment'
+import ventilationIconBlue from 'src/assets/images/icons/ventilation-icon-blue.svg'
+import ventilationIcon from 'src/assets/images/icons/ventilation-icon.svg'
+import climIconBlue from 'src/assets/images/icons/clim-icon-blue.svg'
+import climIcon from 'src/assets/images/icons/clim-icon.svg'
+import A104 from 'src/assets/images/maps/A104.svg'
+import A105 from 'src/assets/images/maps/A105.svg'
+import A106 from 'src/assets/images/maps/A106.svg'
+import A107 from 'src/assets/images/maps/A107.svg'
+import A108 from 'src/assets/images/maps/A108.svg'
+import A109 from 'src/assets/images/maps/A109.svg'
+import A110 from 'src/assets/images/maps/A110.svg'
+import A111 from 'src/assets/images/maps/A111.svg'
+import A112 from 'src/assets/images/maps/A112.svg'
+import A113 from 'src/assets/images/maps/A113.svg'
+import CAFET from 'src/assets/images/maps/CAFET.svg'
+import TRAVAIL from 'src/assets/images/maps/TRAVAIL.svg'
 
 function Room() {
   const [equipmentsData, setEquipmentsData] = useState([])
   const [notificationData] = useState([])
   const headers = ['Température', 'Taux CO2', 'Luminosité', 'Consommation', 'Nombre de personnes']
+  const imagesData = {
+    A104,
+    A105,
+    A106,
+    A107,
+    A108,
+    A109,
+    A110,
+    A111,
+    A112,
+    A113,
+    CAFET,
+    TRAVAIL,
+  }
 
   useEffect(() => {
     const fetchData = () => {
@@ -234,8 +264,8 @@ function Room() {
           <div className="room-controller-toggle-text">
             {
               roomData.ac_state > 0
-                ? <img className="icon-ac" src="../../public/images/icons/clim-icon-blue.svg" />
-                : <img className="icon-ac" src="../../public/images/icons/clim-icon.svg" />
+                ? <img className="icon-ac" src={climIconBlue} />
+                : <img className="icon-ac" src={climIcon} />
             }
             <p
               className="room-controller-bar-text-title size-18 font-bold"
@@ -281,8 +311,8 @@ function Room() {
           <div className="room-controller-toggle-text">
             {
               roomData.vent_state > 0
-                ? <img className="icon-ac" src="public/images/icons/ventilation-icon-blue.svg" />
-                : <img className="icon-ac" src="public/images/icons/ventilation-icon.svg" />
+                ? <img className="icon-ac" src={ventilationIconBlue} />
+                : <img className="icon-ac" src={ventilationIcon} />
             }
             <p
               className="room-controller-bar-text-title size-18 font-bold"
@@ -361,7 +391,7 @@ function Room() {
         </Table>
       </div>
       <div className="container-box room-map">
-        <img src={`../../public/images/maps/${roomData.place_name}.svg`} alt="Plan de la salle" />
+        <img src={imagesData[roomData.place_name]} alt="Plan de la salle" />
       </div>
     </>
   )

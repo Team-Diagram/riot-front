@@ -6,6 +6,10 @@ import { FireIcon, LightBulbIcon } from '@heroicons/react/outline'
 import { getUserData, rooms } from 'src/utils'
 import { fetchEquipments, fetchErrors, shutDownPlace } from 'src/controllers'
 import { Alert, TableGlobal, Toggle } from 'src/components/index'
+import climIconBlue from 'src/assets/images/icons/clim-icon-blue.svg'
+import climIcon from 'src/assets/images/icons/clim-icon.svg'
+import ventilationIconBlue from 'src/assets/images/icons/ventilation-icon-blue.svg'
+import ventilationIcon from 'src/assets/images/icons/ventilation-icon.svg'
 
 function Home() {
   const [roomData, setRoomData] = useState(rooms[0].hours)
@@ -30,11 +34,8 @@ function Home() {
       <div className="table-cell-equipements-icons">
         <Icon icon={LightBulbIcon} color={item.light_state ? 'yellow' : 'default'} />
         <Icon icon={FireIcon} color={item.heater_state ? 'orange' : 'default'} />
-        <img src={`./public/images/icons/clim-${item.ac_state > 0 ? 'icon-blue' : 'icon'}.svg`} />
-        <img src={`./public/images/icons/ventilation-${
-          item.vent_state > 0 ? 'icon-blue' : 'icon'
-        }.svg`}
-        />
+        <img src={item.ac_state > 0 ? climIconBlue : climIcon} />
+        <img src={item.vent_state > 0 ? ventilationIconBlue : ventilationIcon} />
       </div>
     </div>
   )
